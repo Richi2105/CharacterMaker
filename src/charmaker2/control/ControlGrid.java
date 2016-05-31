@@ -6,6 +6,7 @@
 
 package charmaker2.control;
 
+import charmaker2.control.models.SpinnerDecimalModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -41,8 +42,8 @@ public class ControlGrid implements ActionListener, MouseListener
     view.getPanelEditor().add(grid);
     grid.setVisible(true);
     view.getButtonSetGrid().addActionListener(this);
-    SpinnerGridModel sp1 = new SpinnerGridModel(5, 32);
-    SpinnerGridModel sp2 = new SpinnerGridModel(5, 32);
+    SpinnerDecimalModel sp1 = new SpinnerDecimalModel(5, 32);
+    SpinnerDecimalModel sp2 = new SpinnerDecimalModel(5, 32);
     this.spinnerColumns = view.getSpinnerColumns();
     this.spinnerRows = view.getSpinnerRows();
     this.spinnerColumns.setModel(sp1);

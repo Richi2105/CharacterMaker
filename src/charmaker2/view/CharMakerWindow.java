@@ -29,7 +29,21 @@ public class CharMakerWindow extends javax.swing.JFrame {
     java.awt.GridBagConstraints gridBagConstraints;
 
     jFileChooser1 = new javax.swing.JFileChooser();
-    jInternalFrame1 = new javax.swing.JInternalFrame();
+    dialogAddCharacter = new javax.swing.JDialog();
+    jPanel3 = new javax.swing.JPanel();
+    dialogLabelCharacter = new javax.swing.JLabel();
+    dialogLabelCharacterChar = new javax.swing.JLabel();
+    dialogTextFieldCharacterChar = new javax.swing.JTextField();
+    dialogLabelCharacterInt = new javax.swing.JLabel();
+    dialogSpinnerCharacterInt = new javax.swing.JSpinner();
+    dialogLabelCharacterHex = new javax.swing.JLabel();
+    dialogSpinnerCharacterHex = new javax.swing.JSpinner();
+    jPanel7 = new javax.swing.JPanel();
+    dialogLabelDescription = new javax.swing.JLabel();
+    dialogTextFieldDescription = new javax.swing.JTextField();
+    jPanel9 = new javax.swing.JPanel();
+    dialogButtonOK = new javax.swing.JButton();
+    dialogButtonCancel = new javax.swing.JButton();
     jPanel1 = new javax.swing.JPanel();
     panelInput = new javax.swing.JPanel();
     panelFileOperation = new javax.swing.JPanel();
@@ -82,18 +96,69 @@ public class CharMakerWindow extends javax.swing.JFrame {
     jMenu1 = new javax.swing.JMenu();
     jMenu2 = new javax.swing.JMenu();
 
-    jInternalFrame1.setVisible(true);
+    dialogAddCharacter.setMinimumSize(new java.awt.Dimension(350, 150));
+    dialogAddCharacter.getContentPane().setLayout(new javax.swing.BoxLayout(dialogAddCharacter.getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
 
-    javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
-    jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
-    jInternalFrame1Layout.setHorizontalGroup(
-      jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 513, Short.MAX_VALUE)
-    );
-    jInternalFrame1Layout.setVerticalGroup(
-      jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 265, Short.MAX_VALUE)
-    );
+    jPanel3.setLayout(new java.awt.GridBagLayout());
+
+    dialogLabelCharacter.setText("jLabel1");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
+    jPanel3.add(dialogLabelCharacter, gridBagConstraints);
+
+    dialogLabelCharacterChar.setText("jLabel2");
+    jPanel3.add(dialogLabelCharacterChar, new java.awt.GridBagConstraints());
+
+    dialogTextFieldCharacterChar.setText("jTextField1");
+    dialogTextFieldCharacterChar.setMinimumSize(new java.awt.Dimension(22, 22));
+    jPanel3.add(dialogTextFieldCharacterChar, new java.awt.GridBagConstraints());
+
+    dialogLabelCharacterInt.setText("jLabel3");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 3;
+    gridBagConstraints.gridy = 0;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+    jPanel3.add(dialogLabelCharacterInt, gridBagConstraints);
+
+    dialogSpinnerCharacterInt.setMinimumSize(new java.awt.Dimension(40, 22));
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 4;
+    gridBagConstraints.gridy = 0;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+    jPanel3.add(dialogSpinnerCharacterInt, gridBagConstraints);
+
+    dialogLabelCharacterHex.setText("jLabel1");
+    jPanel3.add(dialogLabelCharacterHex, new java.awt.GridBagConstraints());
+
+    dialogSpinnerCharacterHex.setMinimumSize(new java.awt.Dimension(60, 22));
+    jPanel3.add(dialogSpinnerCharacterHex, new java.awt.GridBagConstraints());
+
+    dialogAddCharacter.getContentPane().add(jPanel3);
+
+    jPanel7.setLayout(new java.awt.GridBagLayout());
+
+    dialogLabelDescription.setText("jLabel4");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+    jPanel7.add(dialogLabelDescription, gridBagConstraints);
+
+    dialogTextFieldDescription.setText("jTextField2");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    jPanel7.add(dialogTextFieldDescription, gridBagConstraints);
+
+    dialogAddCharacter.getContentPane().add(jPanel7);
+
+    dialogButtonOK.setText("jButton1");
+    jPanel9.add(dialogButtonOK);
+
+    dialogButtonCancel.setText("jButton2");
+    jPanel9.add(dialogButtonCancel);
+
+    dialogAddCharacter.getContentPane().add(jPanel9);
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,9 +177,9 @@ public class CharMakerWindow extends javax.swing.JFrame {
 
     panelInput.add(panelFileOperation, java.awt.BorderLayout.PAGE_END);
 
-    panelEditorInput.setLayout(new java.awt.GridLayout());
+    panelEditorInput.setLayout(new java.awt.GridLayout(1, 0));
 
-    panelEditor.setLayout(new java.awt.GridLayout());
+    panelEditor.setLayout(new java.awt.GridLayout(1, 0));
     panelEditorInput.add(panelEditor);
 
     panelEditorControl.setLayout(new java.awt.GridBagLayout());
@@ -377,17 +442,31 @@ public class CharMakerWindow extends javax.swing.JFrame {
   private javax.swing.JCheckBox checkBoxMirrorX;
   private javax.swing.JCheckBox checkBoxMirrorY;
   private javax.swing.JComboBox<String> comboBoxDatatype;
+  private javax.swing.JDialog dialogAddCharacter;
+  private javax.swing.JButton dialogButtonCancel;
+  private javax.swing.JButton dialogButtonOK;
+  private javax.swing.JLabel dialogLabelCharacter;
+  private javax.swing.JLabel dialogLabelCharacterChar;
+  private javax.swing.JLabel dialogLabelCharacterHex;
+  private javax.swing.JLabel dialogLabelCharacterInt;
+  private javax.swing.JLabel dialogLabelDescription;
+  private javax.swing.JSpinner dialogSpinnerCharacterHex;
+  private javax.swing.JSpinner dialogSpinnerCharacterInt;
+  private javax.swing.JTextField dialogTextFieldCharacterChar;
+  private javax.swing.JTextField dialogTextFieldDescription;
   private javax.swing.JFileChooser jFileChooser1;
-  private javax.swing.JInternalFrame jInternalFrame1;
   private javax.swing.JMenu jMenu1;
   private javax.swing.JMenu jMenu2;
   private javax.swing.JMenuBar jMenuBar1;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JPanel jPanel2;
+  private javax.swing.JPanel jPanel3;
   private javax.swing.JPanel jPanel4;
   private javax.swing.JPanel jPanel5;
   private javax.swing.JPanel jPanel6;
+  private javax.swing.JPanel jPanel7;
   private javax.swing.JPanel jPanel8;
+  private javax.swing.JPanel jPanel9;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JScrollPane jScrollPane2;
   private javax.swing.JTabbedPane jTabbedPane1;
@@ -646,5 +725,89 @@ public class CharMakerWindow extends javax.swing.JFrame {
    */
   public javax.swing.JPanel getPanelPreviewFont() {
     return panelPreviewFont;
+  }
+
+  /**
+   * @return the dialogButtonCancel
+   */
+  public javax.swing.JButton getDialogButtonCancel() {
+    return dialogButtonCancel;
+  }
+
+  /**
+   * @return the dialogButtonOK
+   */
+  public javax.swing.JButton getDialogButtonOK() {
+    return dialogButtonOK;
+  }
+
+  /**
+   * @return the dialogLabelCharacter
+   */
+  public javax.swing.JLabel getDialogLabelCharacter() {
+    return dialogLabelCharacter;
+  }
+
+  /**
+   * @return the dialogLabelCharacterChar
+   */
+  public javax.swing.JLabel getDialogLabelCharacterChar() {
+    return dialogLabelCharacterChar;
+  }
+
+  /**
+   * @return the dialogLabelCharacterHex
+   */
+  public javax.swing.JLabel getDialogLabelCharacterHex() {
+    return dialogLabelCharacterHex;
+  }
+
+  /**
+   * @return the dialogLabelCharacterInt
+   */
+  public javax.swing.JLabel getDialogLabelCharacterInt() {
+    return dialogLabelCharacterInt;
+  }
+
+  /**
+   * @return the dialogLabelDescription
+   */
+  public javax.swing.JLabel getDialogLabelDescription() {
+    return dialogLabelDescription;
+  }
+
+  /**
+   * @return the dialogSpinnerCharacterInt
+   */
+  public javax.swing.JSpinner getDialogSpinnerCharacterInt() {
+    return dialogSpinnerCharacterInt;
+  }
+
+  /**
+   * @return the dialogTextFieldCharacterChar
+   */
+  public javax.swing.JTextField getDialogTextFieldCharacterChar() {
+    return dialogTextFieldCharacterChar;
+  }
+
+  /**
+   * @return the dialogTextFieldDescription
+   */
+  public javax.swing.JTextField getDialogTextFieldDescription() {
+    return dialogTextFieldDescription;
+  }
+
+  /**
+   * @return the dialogSpinnerCharacterHex
+   */
+  public javax.swing.JSpinner getDialogSpinnerCharacterHex() {
+    return dialogSpinnerCharacterHex;
+  }
+
+  /**
+   * @return the dialogAddCharacter
+   */
+  public javax.swing.JDialog getDialogAddCharacter() {
+    return dialogAddCharacter;
   }
 }

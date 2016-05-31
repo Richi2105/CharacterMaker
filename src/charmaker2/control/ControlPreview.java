@@ -5,6 +5,7 @@
  */
 package charmaker2.control;
 
+import charmaker2.control.models.SpinnerDecimalModel;
 import charmaker2.core.DataGrid;
 import charmaker2.core.character.CharacterDescriptor;
 import charmaker2.view.CharMakerWindow;
@@ -29,7 +30,7 @@ public class ControlPreview implements ActionListener {
   private final JTextArea textAreaPreviewText;
   private final JButton buttonAdd;
   private final JButton buttonClear;
-  private final SpinnerGridModel spinnerPixelSize;
+  private final SpinnerDecimalModel spinnerPixelSize;
   private final JLabel labelPixelSize;
   
   private final int offset = 2;
@@ -44,7 +45,7 @@ public class ControlPreview implements ActionListener {
     this.panelFontPreview = view.getPanelPreviewFont();
     this.buttonAdd = view.getButtonAddText();
     this.buttonClear = view.getButtonClearText();
-    this.spinnerPixelSize = new SpinnerGridModel(1, 10);
+    this.spinnerPixelSize = new SpinnerDecimalModel(1, 10);
     view.getSpinnerPreviewPixelSize().setModel(spinnerPixelSize);
     this.textAreaPreviewText = view.getTextAreaPreviewInput();
     this.labelPixelSize = view.getLabelPreviewPixelSize();

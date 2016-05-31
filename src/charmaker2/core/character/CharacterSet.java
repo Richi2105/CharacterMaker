@@ -100,6 +100,24 @@ public class CharacterSet implements ListModel
     RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
   }
   
+  public void addCharacter(char character, String description, DataGrid grid)
+  {
+    if (this.fontWidth == 0)
+      characters.add(new CharacterDescriptor(grid, description, character, grid.getXSize()));
+    else
+      characters.add(new CharacterDescriptor(grid, description, character, fontWidth));
+    this.updateListDataListener();
+    RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
+
+  }
+  
+  public void addCharacter(char character, String description, DataGrid grid, int width)
+  {
+    characters.add(new CharacterDescriptor(grid, description, character, width));
+    this.updateListDataListener();
+    RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
+  }
+  
   public void removeCharacter(int index)
   {
     this.characters.remove(index);

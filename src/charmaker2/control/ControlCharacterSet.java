@@ -6,6 +6,7 @@
 
 package charmaker2.control;
 
+import charmaker2.control.models.CharacterData;
 import charmaker2.core.character.CharacterSet;
 import java.util.Observable;
 import java.util.logging.Level;
@@ -16,6 +17,7 @@ import charmaker2.util.RSLogger;
 import charmaker2.view.CharMakerWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.JList;
 
@@ -23,7 +25,7 @@ import javax.swing.JList;
  *
  * @author Richard
  */
-public class ControlCharacterSet extends Observable implements ListSelectionListener, ActionListener
+public class ControlCharacterSet extends Observable implements ListSelectionListener, ActionListener, Observer
 {
   private final JList<String> characterList;
   private CharacterSet charSet;
@@ -32,6 +34,8 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
   private final JButton buttonAdd;
   private final JButton buttonRemove;
   private final JButton buttonSort;
+  
+  private final ControlAddCharacter addCharacterController;
   
   public ControlCharacterSet(CharMakerWindow view, ControlGrid grid)
   {
@@ -52,6 +56,8 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
     this.characterList.removeAll();
     this.characterList.setModel(charSet);
     this.currentSelection = 0;
+    
+    this.addCharacterController = new ControlAddCharacter(view);
   }
   
   public void setLabels()
@@ -87,6 +93,15 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
   public void addCharacter(CharacterDescriptor character)
   {
     this.charSet.addCharacter(character.getCharacter(), character.getGrid());
+    this.setChanged();
+    this.notifyObservers();
+  }
+  
+  public void addCharacter(char c, String description)
+  {
+    this.charSet.addCharacter(c, description, grid.getGridPane().getGrid());
+    this.setChanged();
+    this.notifyObservers();
   }
 
   @Override
@@ -105,7 +120,8 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == this.buttonAdd)
     {
-      //todo: show dialog
+      this.addCharacterController.addObserver(this);
+      this.addCharacterController.showDialog();      
     }
     else if (e.getSource() == this.buttonRemove)
     {
@@ -121,5 +137,17 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
     {
       this.charSet.sort();
     }
+  }
+
+  @Override
+  public void update(Observable o, Object arg) {
+    System.out.println("Controller updated");
+    int decicion = this.addCharacterController.getDialogReturn();
+    if (decicion == this.addCharacterController.DIALOG_OK)
+    {
+      CharacterData d = this.addCharacterController.getCharacterData();
+      this.addCharacter(d.character, d.description);
+    }
+    this.addCharacterController.deleteObserver(this);
   }
 }

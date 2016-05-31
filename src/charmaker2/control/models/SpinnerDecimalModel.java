@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package charmaker2.control;
+package charmaker2.control.models;
 
-import javax.swing.SpinnerModel;
+import javax.swing.AbstractSpinnerModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -13,19 +13,28 @@ import javax.swing.event.ChangeListener;
  *
  * @author richard
  */
-public class SpinnerGridModel implements SpinnerModel {
+public class SpinnerDecimalModel extends AbstractSpinnerModel {
   
   private int minVal;
   private int maxVal;
   private int currentVal;
   
-  private ChangeListener changeListener;
-  
-  public SpinnerGridModel(int minValue, int maxValue)
+  public SpinnerDecimalModel(int minValue, int maxValue)
   {    
     this.maxVal = maxValue;
     this.minVal = minValue;
     this.currentVal = minValue;
+  }
+  
+  public int getDecimalValue()
+  {
+    return this.currentVal;
+  }
+  
+  public void setDecimalValue(int val)
+  {
+    if (val >= minVal && val <= maxVal)
+      currentVal = val;
   }
 
   @Override
@@ -39,8 +48,7 @@ public class SpinnerGridModel implements SpinnerModel {
     if (val >= minVal && val <= maxVal)
       currentVal = val;
     
-    if (changeListener != null)
-      changeListener.stateChanged(new ChangeEvent(this));
+    this.fireStateChanged();
   }
 
   @Override
@@ -59,16 +67,5 @@ public class SpinnerGridModel implements SpinnerModel {
       currentVal -= 1;
     }
     return currentVal;
-  }
-
-  @Override
-  public void addChangeListener(ChangeListener l) {
-    this.changeListener = l;
-  }
-
-  @Override
-  public void removeChangeListener(ChangeListener l) {
-    this.changeListener = null;
-  }
-  
+  }  
 }
