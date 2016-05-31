@@ -4,11 +4,9 @@
  * and open the template in the editor.
  */
 
-package charmaker.core;
+package charmaker2.core;
 
 import java.awt.image.Raster;
-import java.util.logging.Level;
-import charmaker.util.RSLogger;
 
 /**
  *
@@ -79,15 +77,19 @@ public class DataGrid
     grid[pos.getX()][pos.getY()] = false;
   }
   
-  public static DataGrid convert(Raster raster)
+  public static DataGrid convert(Raster raster, int height)
   {
-    return DataGrid.convert(raster, 0, 0);
+    return DataGrid.convert(raster, 0, 0, height);
   }
   
-  public static DataGrid convert(Raster raster, int xOffset, int yOffset)
+  public static DataGrid convert(Raster raster, int xOffset, int yOffset, int height)
   {
     int xSize = raster.getWidth()+xOffset+xOffset;
-    int ySize = raster.getHeight()+yOffset+yOffset;
+    int ySize;
+    if (height == 0)
+      ySize = raster.getHeight()+yOffset+yOffset;
+    else
+      ySize = height;
     DataGrid dgrid = new DataGrid(xSize < 5 ? 5 : xSize, ySize < 5 ? 5 : ySize);
 //    RSLogger.getLogger().log(Level.INFO, String.format("Raster details: %d,%d; %d,%d; %d", raster.getMinX(),raster.getMinY(),raster.getWidth(),raster.getHeight(),raster.getNumBands()));
     

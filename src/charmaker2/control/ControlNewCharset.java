@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package charmaker.View;
+package charmaker2.control;
 
-import charmaker.core.DataGrid;
-import charmaker.core.character.CharacterSet;
+import charmaker2.core.DataGrid;
+import charmaker2.core.character.CharacterSet;
+import charmaker2.view.CharMakerWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,15 +18,15 @@ import java.awt.event.ActionListener;
 public class ControlNewCharset implements ActionListener
 {
     
-    private FrameView view;
-    private ControlCharacterList list;
+    private CharMakerWindow view;
+    private ControlCharacterSet list;
     
-    public ControlNewCharset(FrameView view, ControlCharacterList list)
+    public ControlNewCharset(CharMakerWindow view, ControlCharacterSet list)
     {
         this.view = view;
         this.list = list;
-        view.getButtonNewCharSet().addActionListener(this);
-        view.getButtonNewCharSet().setText("New Character Set");
+        view.getButtonNew().addActionListener(this);
+        view.getButtonNew().setText("New Character Set");
     }
 
     @Override

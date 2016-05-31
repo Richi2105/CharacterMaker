@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package charmaker.View;
+package charmaker2.control;
 
+import charmaker2.view.CharMakerWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,16 +23,21 @@ public class ControlFontSettings implements ActionListener
   private int activeButton;
   private JTextField fontName;
   
-  public ControlFontSettings(JRadioButton buttons[], int size, JTextField fontName)
+  public ControlFontSettings(CharMakerWindow view)
   {
     this.buttons = new ArrayList<>();
-    buttons[0].setSelected(true);
-    for (int i=0; i<buttons.length; i+=1)
+    
+    this.buttons.add(view.getRadioButton0());
+    this.buttons.add(view.getRadioButton90());
+    this.buttons.add(view.getRadioButton180());
+    this.buttons.add(view.getRadioButton270());
+
+    for (int i=0; i<4; i+=1)
     {
-      this.buttons.add(buttons[i]);
-      buttons[i].addActionListener(this);
+      buttons.get(i).addActionListener(this);
     }
-    this.fontName = fontName;
+    buttons.get(0).setSelected(true);
+    this.fontName = view.getTextFieldFontName();
   }
   
   public JRadioButton getActiveButton()

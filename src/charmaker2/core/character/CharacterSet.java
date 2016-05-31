@@ -4,16 +4,16 @@
  * and open the template in the editor.
  */
 
-package charmaker.core.character;
+package charmaker2.core.character;
 
-import charmaker.core.DataGrid;
+import charmaker2.core.DataGrid;
 import java.awt.image.Raster;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
-import charmaker.util.RSLogger;
+import charmaker2.util.RSLogger;
 
 /**
  *
@@ -50,6 +50,16 @@ public class CharacterSet implements ListModel
     return characters.get(index);
   }
   
+  public CharacterDescriptor getCharacter(char c)
+  {
+    for (CharacterDescriptor ch: characters)
+    {
+      if (ch.getCharacter() == c)
+        return ch;
+    }
+    return null;
+  }
+  
   public String getFontName()
   {
     return fontName;
@@ -67,17 +77,38 @@ public class CharacterSet implements ListModel
   
   public void addCharacter(char character, Raster raster)
   {
-    characters.add(new CharacterDescriptor(DataGrid.convert(raster), Char2Description.getDescription(character), character, fontWidth));
+    characters.add(new CharacterDescriptor(DataGrid.convert(raster, fontHeight), Char2Description.getDescription(character), character, fontWidth));
     this.updateListDataListener();
     RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
   }
   
   public void addCharacter(char character, DataGrid grid)
   {
-    characters.add(new CharacterDescriptor(grid, Char2Description.getDescription(character), character, fontWidth));
+    if (this.fontWidth == 0)
+      characters.add(new CharacterDescriptor(grid, Char2Description.getDescription(character), character, grid.getXSize()));
+    else
+      characters.add(new CharacterDescriptor(grid, Char2Description.getDescription(character), character, fontWidth));
     this.updateListDataListener();
     RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
 
+  }
+  
+  public void addCharacter(char character, DataGrid grid, int width)
+  {
+    characters.add(new CharacterDescriptor(grid, Char2Description.getDescription(character), character, width));
+    this.updateListDataListener();
+    RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
+  }
+  
+  public void removeCharacter(int index)
+  {
+    this.characters.remove(index);
+    this.updateListDataListener();
+  }
+  
+  public void sort()
+  {
+    //TODO: implement
   }
 
   @Override

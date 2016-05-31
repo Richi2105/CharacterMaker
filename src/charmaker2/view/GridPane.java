@@ -6,8 +6,8 @@
 
 package charmaker2.view;
 
-import charmaker.core.DataGrid;
-import charmaker.core.DataGridPosition;
+import charmaker2.core.DataGrid;
+import charmaker2.core.DataGridPosition;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -35,6 +35,7 @@ public class GridPane extends JPanel
   
   public GridPane()
   {
+    super();
     line = new Line2D.Double();
     rectangle = new Rectangle2D.Double();
     columns = 5;
@@ -47,12 +48,12 @@ public class GridPane extends JPanel
   
   private void calculateDimensions()
   {
-    xSize = this.getWidth();
+    xSize = this.getParent().getWidth();
     stepSize = xSize / columns;
     ySize = (int) (stepSize * rows);
-    if (ySize > this.getHeight())
+    if (ySize > this.getParent().getHeight())
     {
-      ySize = this.getHeight();
+      ySize = this.getParent().getHeight();
       stepSize = ySize / rows;
       xSize = (int) (stepSize * columns);
     }
@@ -101,6 +102,12 @@ public class GridPane extends JPanel
 //    this.calculateDimensions();
     int xPos = (int) (p.getX() / stepSize);
     int yPos = (int) (p.getY() / stepSize);
+    
+    if (xPos > this.getWidth())
+      xPos = this.getWidth();
+    
+    if (yPos > this.getHeight())
+      yPos = this.getHeight();
     DataGridPosition pos = new DataGridPosition(xPos, yPos);
     
     rectangle.setFrame(xPos*stepSize, yPos*stepSize, stepSize, stepSize);

@@ -4,18 +4,17 @@
  * and open the template in the editor.
  */
 
-package charmaker.core;
+package charmaker2.core;
 
-import charmaker.core.character.CharacterDescriptor;
-import charmaker.core.character.CharacterSet;
-import charmaker.util.RSLogger;
+import charmaker2.core.character.CharacterDescriptor;
+import charmaker2.core.character.CharacterSet;
+import charmaker2.util.RSLogger;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

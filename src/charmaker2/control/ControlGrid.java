@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.logging.Level;
-import charmaker.util.RSLogger;
+import charmaker2.util.RSLogger;
 import charmaker2.view.CharMakerWindow;
 import charmaker2.view.GridPane;
 import javax.swing.JCheckBox;
@@ -38,6 +38,8 @@ public class ControlGrid implements ActionListener, MouseListener
 
     grid = new GridPane();
     grid.setGrid(gridXNumber, gridYNumber);
+    view.getPanelEditor().add(grid);
+    grid.setVisible(true);
     view.getButtonSetGrid().addActionListener(this);
     SpinnerGridModel sp1 = new SpinnerGridModel(5, 32);
     SpinnerGridModel sp2 = new SpinnerGridModel(5, 32);
@@ -110,12 +112,13 @@ public class ControlGrid implements ActionListener, MouseListener
   @Override
   public void mouseClicked(MouseEvent e)
   {
-    grid.fillOneGrid(e.getPoint());
+//    grid.fillOneGrid(e.getPoint());
   }
 
   @Override
   public void mousePressed(MouseEvent e)
   {
+    grid.fillOneGrid(e.getPoint());
   }
 
   @Override

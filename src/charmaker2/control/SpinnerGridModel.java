@@ -54,7 +54,7 @@ public class SpinnerGridModel implements SpinnerModel {
 
   @Override
   public Object getPreviousValue() {
-    if (currentVal > maxVal)
+    if (currentVal > minVal)
     {
       currentVal -= 1;
     }

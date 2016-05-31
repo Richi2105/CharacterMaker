@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package charmaker.util;
+package charmaker2.util;
 
 import java.sql.Date;
 import java.sql.Time;

@@ -29,6 +29,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     java.awt.GridBagConstraints gridBagConstraints;
 
     jFileChooser1 = new javax.swing.JFileChooser();
+    jInternalFrame1 = new javax.swing.JInternalFrame();
     jPanel1 = new javax.swing.JPanel();
     panelInput = new javax.swing.JPanel();
     panelFileOperation = new javax.swing.JPanel();
@@ -81,7 +82,20 @@ public class CharMakerWindow extends javax.swing.JFrame {
     jMenu1 = new javax.swing.JMenu();
     jMenu2 = new javax.swing.JMenu();
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+    jInternalFrame1.setVisible(true);
+
+    javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+    jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+    jInternalFrame1Layout.setHorizontalGroup(
+      jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 513, Short.MAX_VALUE)
+    );
+    jInternalFrame1Layout.setVerticalGroup(
+      jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 265, Short.MAX_VALUE)
+    );
+
+    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
     jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -98,19 +112,9 @@ public class CharMakerWindow extends javax.swing.JFrame {
 
     panelInput.add(panelFileOperation, java.awt.BorderLayout.PAGE_END);
 
-    panelEditorInput.setLayout(new javax.swing.BoxLayout(panelEditorInput, javax.swing.BoxLayout.LINE_AXIS));
+    panelEditorInput.setLayout(new java.awt.GridLayout());
 
-    javax.swing.GroupLayout panelEditorLayout = new javax.swing.GroupLayout(panelEditor);
-    panelEditor.setLayout(panelEditorLayout);
-    panelEditorLayout.setHorizontalGroup(
-      panelEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 150, Short.MAX_VALUE)
-    );
-    panelEditorLayout.setVerticalGroup(
-      panelEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 210, Short.MAX_VALUE)
-    );
-
+    panelEditor.setLayout(new java.awt.GridLayout());
     panelEditorInput.add(panelEditor);
 
     panelEditorControl.setLayout(new java.awt.GridBagLayout());
@@ -278,7 +282,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
 
     jPanel4.add(jScrollPane1);
 
-    jPanel8.setLayout(new javax.swing.BoxLayout(jPanel8, javax.swing.BoxLayout.LINE_AXIS));
+    jPanel8.setLayout(new java.awt.GridLayout(1, 0));
 
     labelPreviewPixelSize.setText("jLabel1");
     jPanel8.add(labelPreviewPixelSize);
@@ -298,11 +302,11 @@ public class CharMakerWindow extends javax.swing.JFrame {
     panelPreviewFont.setLayout(panelPreviewFontLayout);
     panelPreviewFontLayout.setHorizontalGroup(
       panelPreviewFontLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 177, Short.MAX_VALUE)
+      .addGap(0, 434, Short.MAX_VALUE)
     );
     panelPreviewFontLayout.setVerticalGroup(
       panelPreviewFontLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 92, Short.MAX_VALUE)
+      .addGap(0, 178, Short.MAX_VALUE)
     );
 
     panelPreview.add(panelPreviewFont, java.awt.BorderLayout.CENTER);
@@ -374,6 +378,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
   private javax.swing.JCheckBox checkBoxMirrorY;
   private javax.swing.JComboBox<String> comboBoxDatatype;
   private javax.swing.JFileChooser jFileChooser1;
+  private javax.swing.JInternalFrame jInternalFrame1;
   private javax.swing.JMenu jMenu1;
   private javax.swing.JMenu jMenu2;
   private javax.swing.JMenuBar jMenuBar1;
@@ -634,5 +639,12 @@ public class CharMakerWindow extends javax.swing.JFrame {
    */
   public javax.swing.JFileChooser getjFileChooser1() {
     return jFileChooser1;
+  }
+
+  /**
+   * @return the panelPreviewFont
+   */
+  public javax.swing.JPanel getPanelPreviewFont() {
+    return panelPreviewFont;
   }
 }

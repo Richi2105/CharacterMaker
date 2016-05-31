@@ -6,8 +6,8 @@
 
 package charmaker2.control;
 
-import charmaker.util.SavedSettings;
 import charmaker2.core.BitmapReader;
+import charmaker2.util.SavedSettings;
 import charmaker2.view.CharMakerWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +22,7 @@ import javax.swing.JFileChooser;
 public class ControlFileOperation extends Observable implements ActionListener
 {
   private CharMakerWindow view;
-  private ControlCharacterList characterListController;
+  private ControlCharacterSet characterListController;
   private File folderPath;
   private SavedSettings settings;
 //  private BitmapReader reader;
@@ -34,7 +34,7 @@ public class ControlFileOperation extends Observable implements ActionListener
     this.folderPath = new File(settings.getProperty("PATH"));
   }
   
-  public void addCharacterListController(ControlCharacterList characterListController)
+  public void addCharacterListController(ControlCharacterSet characterListController)
   {
     this.characterListController = characterListController;
   }

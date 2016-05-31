@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-package charmaker.View;
+package charmaker2.control;
 
-import charmaker.core.HeaderWriter;
-import charmaker.core.character.CharacterSet;
+import charmaker2.core.HeaderWriter;
+import charmaker2.core.character.CharacterSet;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
-import javax.swing.JRadioButton;
-import charmaker.util.RSLogger;
+import charmaker2.util.RSLogger;
+import charmaker2.view.CharMakerWindow;
 
 /**
  *
@@ -25,7 +25,7 @@ import charmaker.util.RSLogger;
  */
 public class ControlHeaderWriter implements ActionListener, Observer
 {
-  private FrameView view;
+  private CharMakerWindow view;
   private HeaderWriter writer;
   private ControlFontSettings fontSettings;
   private ComboBoxDataTypes dataTypes;
@@ -33,17 +33,17 @@ public class ControlHeaderWriter implements ActionListener, Observer
   private CharacterSet charaSet;
   private File filePath;
   
-  private ControlCharacterList charaListController;
+  private ControlCharacterSet charaListController;
   private ControlFileOperation fileController;
   
-  public ControlHeaderWriter(FrameView view, ControlFontSettings fontSettings)
+  public ControlHeaderWriter(CharMakerWindow view, ControlFontSettings fontSettings)
   {
     this.view = view;
-    view.getButtonOutputFont().addActionListener(this);
-    view.getComboBoxOutputType().removeAllItems();
+    view.getButtonSave().addActionListener(this);
+    view.getComboBoxDatatype().removeAllItems();
     
     this.dataTypes = new ComboBoxDataTypes();
-    view.getComboBoxOutputType().setModel(dataTypes);
+    view.getComboBoxDatatype().setModel(dataTypes);
     dataTypes.updateList();
     
 /*    JRadioButton buttons[] = {view.getRadioButtonRotate0(),
@@ -68,7 +68,7 @@ public class ControlHeaderWriter implements ActionListener, Observer
     int rotation = fontSettings.getActiveButtonIndex();
     int dataType = this.dataTypes.getSelectedBitDepth();
     String dataTypeName = this.dataTypes.getSelectedDatatypeName();
-    boolean mirror = view.getCheckBoxMirror().isSelected();
+    boolean mirror = view.getCheckBoxMirrorX().isSelected();
     writer = new HeaderWriter(rotation, dataType, dataTypeName, mirror);
     
     try
@@ -104,9 +104,9 @@ public class ControlHeaderWriter implements ActionListener, Observer
     {
       filePath = ((ControlFileOperation)o).getFolderPath();
     }
-    else if (o.getClass().equals(ControlCharacterList.class))
+    else if (o.getClass().equals(ControlCharacterSet.class))
     {
-      charaSet = ((ControlCharacterList)o).getCurrentCharacterSet();
+      charaSet = ((ControlCharacterSet)o).getCurrentCharacterSet();
     }
       
   }

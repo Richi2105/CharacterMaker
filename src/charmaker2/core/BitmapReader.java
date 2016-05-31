@@ -6,8 +6,6 @@
 
 package charmaker2.core;
 
-import charmaker.core.DataGrid;
-import charmaker.core.character.CharacterSet;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,8 +19,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import charmaker.util.RSLogger;
-import charmaker2.control.ControlCharacterList;
+import charmaker2.control.ControlCharacterSet;
+import charmaker2.core.character.CharacterSet;
+import charmaker2.util.RSLogger;
 
 /**
  *
@@ -32,7 +31,7 @@ public class BitmapReader
 {
   private BitmapReader() {}
   
-  public static void readBitmap(File filePath, ControlCharacterList charaListController)
+  public static void readBitmap(File filePath, ControlCharacterSet charaListController)
   {
     Document doc;
     ArrayList<BufferedImage> images = new ArrayList<>();
@@ -97,7 +96,7 @@ public class BitmapReader
       char c = (char) ((Integer.decode(attributes.getNamedItem("id").getNodeValue())) & 0xFF);
       
 //      RSLogger.getLogger().log(Level.INFO, String.format("character %s @ %d,%d,%d,%d", c, xStart,yStart,xEnd,yEnd));
-      charSet.addCharacter(c, DataGrid.convert(images.get(page).getData(new Rectangle(xStart, yStart, xEnd, yEnd)), xOffset, yOffset));
+      charSet.addCharacter(c, DataGrid.convert(images.get(page).getData(new Rectangle(xStart, yStart, xEnd, yEnd)), xOffset, yOffset, size));
       
     }
   }

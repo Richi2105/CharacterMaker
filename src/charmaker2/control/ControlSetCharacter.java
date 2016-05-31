@@ -4,13 +4,15 @@
  * and open the template in the editor.
  */
 
-package charmaker.View;
+package charmaker2.control;
 
-import charmaker.core.character.CharacterDescriptor;
+import charmaker2.core.character.CharacterDescriptor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
-import charmaker.util.RSLogger;
+import charmaker2.util.RSLogger;
+import charmaker2.view.CharMakerWindow;
+import charmaker2.view.GridPane;
 
 /**
  *
@@ -18,17 +20,17 @@ import charmaker.util.RSLogger;
  */
 public class ControlSetCharacter implements ActionListener
 {
-  private FrameView view;
-  private ControlCharacterList listController;
+  private CharMakerWindow view;
+  private ControlCharacterSet listController;
   private GridPane grid;
   
-  public ControlSetCharacter(FrameView view, ControlCharacterList listController, GridPane grid)
+  public ControlSetCharacter(CharMakerWindow view, ControlCharacterSet listController, GridPane grid)
   {
     this.view = view;
     this.listController = listController;
     this.grid = grid;
-    view.getButtonSetCharacter().addActionListener(this);
-    view.getButtonSetCharacter().setText("Set Character");
+    view.getButtonSetChar().addActionListener(this);
+    view.getButtonSetChar().setText("Set Character");
   }
 
   @Override

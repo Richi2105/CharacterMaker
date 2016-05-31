@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package charmaker.core.character;
+package charmaker2.core.character;
 
-import charmaker.core.DataGrid;
+import charmaker2.core.DataGrid;
 
 /**
  *

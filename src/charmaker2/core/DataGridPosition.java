@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package charmaker.core;
+package charmaker2.core;
 
 /**
  *

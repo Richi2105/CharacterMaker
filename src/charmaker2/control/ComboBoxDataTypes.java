@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package charmaker.View;
+package charmaker2.control;
 
-import charmaker.View.subsystem.VarBitdepthID;
+import charmaker2.View.subsystem.VarBitdepthID;
 import java.util.ArrayList;
 import javax.swing.ComboBoxModel;
 import javax.swing.event.ListDataEvent;

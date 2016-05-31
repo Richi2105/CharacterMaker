@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package charmaker.View.subsystem;
+package charmaker2.View.subsystem;
 
 /**
  *
