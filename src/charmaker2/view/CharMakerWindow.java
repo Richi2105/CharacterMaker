@@ -52,7 +52,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     buttonSave = new javax.swing.JButton();
     panelEditorInput = new javax.swing.JPanel();
     panelEditor = new javax.swing.JPanel();
-    jTabbedPane1 = new javax.swing.JTabbedPane();
+    tabbedPaneFont = new javax.swing.JTabbedPane();
     panelEditorControl = new javax.swing.JPanel();
     labelColumns = new javax.swing.JLabel();
     spinnerColumns = new javax.swing.JSpinner();
@@ -74,6 +74,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     panelCharacters = new javax.swing.JPanel();
     jPanel2 = new javax.swing.JPanel();
     buttonAddChar = new javax.swing.JButton();
+    buttonEditChar = new javax.swing.JButton();
     buttonRemoveChar = new javax.swing.JButton();
     buttonSortChars = new javax.swing.JButton();
     jPanel5 = new javax.swing.JPanel();
@@ -94,7 +95,16 @@ public class CharMakerWindow extends javax.swing.JFrame {
     panelPreviewFont = new javax.swing.JPanel();
     jMenuBar1 = new javax.swing.JMenuBar();
     jMenu1 = new javax.swing.JMenu();
+    menuItemNewCharacterSet = new javax.swing.JMenuItem();
+    jSeparator1 = new javax.swing.JPopupMenu.Separator();
+    menuItemLoadCharacterSet = new javax.swing.JMenuItem();
+    menuItemSaveCharacterSet = new javax.swing.JMenuItem();
+    jSeparator2 = new javax.swing.JPopupMenu.Separator();
+    menuItemQuit = new javax.swing.JMenuItem();
     jMenu2 = new javax.swing.JMenu();
+    menuItemLoadXML = new javax.swing.JMenuItem();
+    jSeparator3 = new javax.swing.JPopupMenu.Separator();
+    menuItemWriteHeader = new javax.swing.JMenuItem();
 
     dialogAddCharacter.setMinimumSize(new java.awt.Dimension(350, 150));
     dialogAddCharacter.getContentPane().setLayout(new javax.swing.BoxLayout(dialogAddCharacter.getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
@@ -216,7 +226,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelEditorControl.add(buttonSetGrid, gridBagConstraints);
 
-    jTabbedPane1.addTab("tab1", panelEditorControl);
+    tabbedPaneFont.addTab("tab1", panelEditorControl);
 
     panelHeaderControl.setLayout(new java.awt.GridBagLayout());
 
@@ -283,7 +293,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(checkBoxMirrorY, gridBagConstraints);
 
-    jTabbedPane1.addTab("tab2", panelHeaderControl);
+    tabbedPaneFont.addTab("tab2", panelHeaderControl);
 
     panelCharacters.setLayout(new java.awt.BorderLayout());
 
@@ -293,6 +303,13 @@ public class CharMakerWindow extends javax.swing.JFrame {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
     jPanel2.add(buttonAddChar, gridBagConstraints);
+
+    buttonEditChar.setText("jButton1");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 3;
+    gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
+    jPanel2.add(buttonEditChar, gridBagConstraints);
 
     buttonRemoveChar.setText("jButton4");
     gridBagConstraints = new java.awt.GridBagConstraints();
@@ -329,9 +346,9 @@ public class CharMakerWindow extends javax.swing.JFrame {
 
     panelCharacters.add(jPanel6, java.awt.BorderLayout.CENTER);
 
-    jTabbedPane1.addTab("tab3", panelCharacters);
+    tabbedPaneFont.addTab("tab3", panelCharacters);
 
-    panelEditorInput.add(jTabbedPane1);
+    panelEditorInput.add(tabbedPaneFont);
 
     panelInput.add(panelEditorInput, java.awt.BorderLayout.CENTER);
 
@@ -381,9 +398,32 @@ public class CharMakerWindow extends javax.swing.JFrame {
     getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
     jMenu1.setText("File");
+
+    menuItemNewCharacterSet.setText("jMenuItem1");
+    jMenu1.add(menuItemNewCharacterSet);
+    jMenu1.add(jSeparator1);
+
+    menuItemLoadCharacterSet.setText("jMenuItem2");
+    jMenu1.add(menuItemLoadCharacterSet);
+
+    menuItemSaveCharacterSet.setText("jMenuItem3");
+    jMenu1.add(menuItemSaveCharacterSet);
+    jMenu1.add(jSeparator2);
+
+    menuItemQuit.setText("jMenuItem4");
+    jMenu1.add(menuItemQuit);
+
     jMenuBar1.add(jMenu1);
 
     jMenu2.setText("Edit");
+
+    menuItemLoadXML.setText("jMenuItem1");
+    jMenu2.add(menuItemLoadXML);
+    jMenu2.add(jSeparator3);
+
+    menuItemWriteHeader.setText("jMenuItem2");
+    jMenu2.add(menuItemWriteHeader);
+
     jMenuBar1.add(jMenu2);
 
     setJMenuBar(jMenuBar1);
@@ -430,6 +470,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
   private javax.swing.JButton buttonAddChar;
   private javax.swing.JButton buttonAddText;
   private javax.swing.JButton buttonClearText;
+  private javax.swing.JButton buttonEditChar;
   private javax.swing.JButton buttonNew;
   private javax.swing.JButton buttonOpen;
   private javax.swing.JButton buttonRemoveChar;
@@ -469,13 +510,21 @@ public class CharMakerWindow extends javax.swing.JFrame {
   private javax.swing.JPanel jPanel9;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JScrollPane jScrollPane2;
-  private javax.swing.JTabbedPane jTabbedPane1;
+  private javax.swing.JPopupMenu.Separator jSeparator1;
+  private javax.swing.JPopupMenu.Separator jSeparator2;
+  private javax.swing.JPopupMenu.Separator jSeparator3;
   private javax.swing.JLabel labelColumns;
   private javax.swing.JLabel labelDatatype;
   private javax.swing.JLabel labelFontName;
   private javax.swing.JLabel labelPreviewPixelSize;
   private javax.swing.JLabel labelRows;
   private javax.swing.JList<String> listChars;
+  private javax.swing.JMenuItem menuItemLoadCharacterSet;
+  private javax.swing.JMenuItem menuItemLoadXML;
+  private javax.swing.JMenuItem menuItemNewCharacterSet;
+  private javax.swing.JMenuItem menuItemQuit;
+  private javax.swing.JMenuItem menuItemSaveCharacterSet;
+  private javax.swing.JMenuItem menuItemWriteHeader;
   private javax.swing.JPanel panelCharacters;
   private javax.swing.JPanel panelEditor;
   private javax.swing.JPanel panelEditorControl;
@@ -492,6 +541,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
   private javax.swing.JSpinner spinnerColumns;
   private javax.swing.JSpinner spinnerPreviewPixelSize;
   private javax.swing.JSpinner spinnerRows;
+  private javax.swing.JTabbedPane tabbedPaneFont;
   private javax.swing.JTextArea textAreaPreviewInput;
   private javax.swing.JTextField textFieldFontName;
   // End of variables declaration//GEN-END:variables
@@ -809,5 +859,61 @@ public class CharMakerWindow extends javax.swing.JFrame {
    */
   public javax.swing.JDialog getDialogAddCharacter() {
     return dialogAddCharacter;
+  }
+
+  /**
+   * @return the tabbedPaneFont
+   */
+  public javax.swing.JTabbedPane getTabbedPaneFont() {
+    return tabbedPaneFont;
+  }
+
+  /**
+   * @return the menuItemLoadCharacterSet
+   */
+  public javax.swing.JMenuItem getMenuItemLoadCharacterSet() {
+    return menuItemLoadCharacterSet;
+  }
+
+  /**
+   * @return the menuItemLoadXML
+   */
+  public javax.swing.JMenuItem getMenuItemLoadXML() {
+    return menuItemLoadXML;
+  }
+
+  /**
+   * @return the menuItemNewCharacterSet
+   */
+  public javax.swing.JMenuItem getMenuItemNewCharacterSet() {
+    return menuItemNewCharacterSet;
+  }
+
+  /**
+   * @return the menuItemQuit
+   */
+  public javax.swing.JMenuItem getMenuItemQuit() {
+    return menuItemQuit;
+  }
+
+  /**
+   * @return the menuItemSaveCharacterSet
+   */
+  public javax.swing.JMenuItem getMenuItemSaveCharacterSet() {
+    return menuItemSaveCharacterSet;
+  }
+
+  /**
+   * @return the menuItemWriteHeader
+   */
+  public javax.swing.JMenuItem getMenuItemWriteHeader() {
+    return menuItemWriteHeader;
+  }
+
+  /**
+   * @return the buttonEditChar
+   */
+  public javax.swing.JButton getButtonEditChar() {
+    return buttonEditChar;
   }
 }

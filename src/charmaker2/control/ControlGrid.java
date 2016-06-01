@@ -15,14 +15,18 @@ import java.util.logging.Level;
 import charmaker2.util.RSLogger;
 import charmaker2.view.CharMakerWindow;
 import charmaker2.view.GridPane;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JSpinner;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
  * @author Richard
  */
-public class ControlGrid implements ActionListener, MouseListener
+public class ControlGrid implements ActionListener, MouseListener, ChangeListener
 {
   private int gridXNumber;
   private int gridYNumber;
@@ -31,6 +35,11 @@ public class ControlGrid implements ActionListener, MouseListener
   private final JSpinner spinnerColumns;
   private final JSpinner spinnerRows;
   private final JCheckBox checkBoxVariableColumns;
+  
+  private final JButton buttonSetGrid;
+  
+  private final JLabel labelColumns;
+  private final JLabel labelRows;
   
   public ControlGrid(CharMakerWindow view)
   {    
@@ -41,15 +50,35 @@ public class ControlGrid implements ActionListener, MouseListener
     grid.setGrid(gridXNumber, gridYNumber);
     view.getPanelEditor().add(grid);
     grid.setVisible(true);
-    view.getButtonSetGrid().addActionListener(this);
+    
+    this.buttonSetGrid = view.getButtonSetGrid();
+    this.buttonSetGrid.addActionListener(this);
+    
     SpinnerDecimalModel sp1 = new SpinnerDecimalModel(5, 32);
     SpinnerDecimalModel sp2 = new SpinnerDecimalModel(5, 32);
     this.spinnerColumns = view.getSpinnerColumns();
     this.spinnerRows = view.getSpinnerRows();
     this.spinnerColumns.setModel(sp1);
     this.spinnerRows.setModel(sp2);
+    
+    this.spinnerColumns.setValue(gridXNumber);
+    this.spinnerRows.setValue(gridYNumber);
+    
+    this.spinnerColumns.addChangeListener(this);
+    this.spinnerRows.addChangeListener(this);
+    
     this.checkBoxVariableColumns = view.getCheckBoxColumns();
     grid.addMouseListener(this);
+    
+    this.labelColumns = view.getLabelColumns();
+    this.labelRows = view.getLabelRows();
+  }
+  
+  public void setLabels()
+  {
+    this.labelColumns.setText("Columns");
+    this.labelRows.setText("Rows");
+    this.buttonSetGrid.setText("Set Grid");
   }
   
   public void setDimensions(int xSize, int ySize)
@@ -135,5 +164,15 @@ public class ControlGrid implements ActionListener, MouseListener
   @Override
   public void mouseExited(MouseEvent e)
   {
+  }
+
+  @Override
+  public void stateChanged(ChangeEvent e) {
+    if (e.getSource() == this.spinnerColumns)
+    {
+      this.gridXNumber = (int) this.spinnerColumns.getValue();
+    }
+    else if (e.getSource() == this.spinnerRows)
+      this.gridYNumber = (int) this.spinnerRows.getValue();
   }
 }

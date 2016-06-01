@@ -7,25 +7,23 @@
 package charmaker2.core.character;
 
 import charmaker2.core.DataGrid;
+import charmaker2.util.RSLogger;
 import java.awt.image.Raster;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import javax.swing.ListModel;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
-import charmaker2.util.RSLogger;
+import javax.swing.AbstractListModel;
 
 /**
  *
  * @author Richard
  */
-public class CharacterSet implements ListModel
+public class CharacterSet extends AbstractListModel<String> implements Serializable
 {
-  private ArrayList<CharacterDescriptor> characters;
-  private int fontHeight;
-  private int fontWidth;
-  private String fontName;
-  private ListDataListener listener;
+  private final ArrayList<CharacterDescriptor> characters;
+  private final int fontHeight;
+  private final int fontWidth;
+  private final String fontName;
   
   public CharacterSet(int width, int height, String fontName)
   {
@@ -35,14 +33,6 @@ public class CharacterSet implements ListModel
     this.fontName = fontName;
     
     RSLogger.getLogger().log(Level.INFO, String.format("new Character set: %s, height: %d", fontName, height));
-  }
-  
-  private void updateListDataListener()
-  {
-    if (listener != null)
-    {
-      listener.contentsChanged(new ListDataEvent(this, ListDataEvent.CONTENTS_CHANGED, 0, 0));
-    }
   }
   
   public CharacterDescriptor getCharacterAt(int index)
@@ -78,7 +68,7 @@ public class CharacterSet implements ListModel
   public void addCharacter(char character, Raster raster)
   {
     characters.add(new CharacterDescriptor(DataGrid.convert(raster, fontHeight), Char2Description.getDescription(character), character, fontWidth));
-    this.updateListDataListener();
+    this.fireContentsChanged(this, this.characters.size()-1, this.characters.size());
     RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
   }
   
@@ -88,7 +78,7 @@ public class CharacterSet implements ListModel
       characters.add(new CharacterDescriptor(grid, Char2Description.getDescription(character), character, grid.getXSize()));
     else
       characters.add(new CharacterDescriptor(grid, Char2Description.getDescription(character), character, fontWidth));
-    this.updateListDataListener();
+    this.fireContentsChanged(this, this.characters.size()-1, this.characters.size());
     RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
 
   }
@@ -96,7 +86,7 @@ public class CharacterSet implements ListModel
   public void addCharacter(char character, DataGrid grid, int width)
   {
     characters.add(new CharacterDescriptor(grid, Char2Description.getDescription(character), character, width));
-    this.updateListDataListener();
+    this.fireContentsChanged(this, this.characters.size()-1, this.characters.size());
     RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
   }
   
@@ -106,7 +96,7 @@ public class CharacterSet implements ListModel
       characters.add(new CharacterDescriptor(grid, description, character, grid.getXSize()));
     else
       characters.add(new CharacterDescriptor(grid, description, character, fontWidth));
-    this.updateListDataListener();
+    this.fireContentsChanged(this, this.characters.size()-1, this.characters.size());
     RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
 
   }
@@ -114,14 +104,14 @@ public class CharacterSet implements ListModel
   public void addCharacter(char character, String description, DataGrid grid, int width)
   {
     characters.add(new CharacterDescriptor(grid, description, character, width));
-    this.updateListDataListener();
+    this.fireContentsChanged(this, this.characters.size()-1, this.characters.size());
     RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
   }
   
   public void removeCharacter(int index)
   {
     this.characters.remove(index);
-    this.updateListDataListener();
+    this.fireContentsChanged(this, index-1, index);
   }
   
   public void sort()
@@ -136,7 +126,7 @@ public class CharacterSet implements ListModel
   }
 
   @Override
-  public Object getElementAt(int index)
+  public String getElementAt(int index)
   {
     return characters.get(index).getDescriptor();
   }
@@ -145,16 +135,9 @@ public class CharacterSet implements ListModel
   {
     return characters;
   }
-
-  @Override
-  public void addListDataListener(ListDataListener l)
+  
+  public void update(int index)
   {
-    this.listener = l;
-  }
-
-  @Override
-  public void removeListDataListener(ListDataListener l)
-  {
-    this.listener = null;
+    this.fireContentsChanged(this, index-1, index);
   }
 }

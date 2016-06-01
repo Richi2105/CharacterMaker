@@ -8,6 +8,7 @@ package charmaker2.control;
 import charmaker2.control.models.CharacterData;
 import charmaker2.control.models.SpinnerDecimalModel;
 import charmaker2.control.models.SpinnerHexaModel;
+import charmaker2.core.character.CharacterDescriptor;
 import charmaker2.view.CharMakerWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -105,16 +106,28 @@ public class ControlAddCharacter extends Observable implements ActionListener, C
   
   private void setCharacterChar(char c)
   {
+    this.spinnerHex.removeChangeListener(this);
+    this.spinnerInt.removeChangeListener(this);
+    
     this.textFieldCharacter.setText(String.format("%c", c));
     this.spinnerModelDecimal.setValue((int) c);
     this.spinnerModelHex.setValue((int) c);
+    
+    this.spinnerInt.addChangeListener(this);
+    this.spinnerHex.addChangeListener(this);
   }
   
   private void setCharacterDec(int d)
   {
+    this.spinnerHex.removeChangeListener(this);
+    this.spinnerInt.removeChangeListener(this);
+    
     this.textFieldCharacter.setText(String.format("%c", (char) d));
     this.spinnerModelDecimal.setValue(d);
     this.spinnerModelHex.setValue(d);
+    
+    this.spinnerInt.addChangeListener(this);
+    this.spinnerHex.addChangeListener(this);
   }
   
   public void showDialog()
@@ -122,6 +135,13 @@ public class ControlAddCharacter extends Observable implements ActionListener, C
     this.dialogReturn = DIALOG_CANCEL;
     this.dialog.setVisible(true);
     this.dialog.setEnabled(true);
+  }
+  
+  public void showDialog(CharacterDescriptor desc)
+  {
+    this.setCharacterChar(desc.getCharacter());
+    this.textFieldDescription.setText(desc.getDescriptor());
+    this.showDialog();
   }
 
   @Override
@@ -156,19 +176,13 @@ public class ControlAddCharacter extends Observable implements ActionListener, C
   public void stateChanged(ChangeEvent e) {
     if (e.getSource() == this.spinnerHex)
     {
-      this.spinnerHex.removeChangeListener(this);
-      this.spinnerInt.removeChangeListener(this);
+      
       this.setCharacterDec(this.spinnerModelHex.getDecimalValue());
-      this.spinnerInt.addChangeListener(this);
-      this.spinnerHex.addChangeListener(this);
+      
     }
     else if (e.getSource() == this.spinnerInt)
     {
-      this.spinnerHex.removeChangeListener(this);
-      this.spinnerInt.removeChangeListener(this);
       this.setCharacterDec(this.spinnerModelDecimal.getDecimalValue());
-      this.spinnerInt.addChangeListener(this);
-      this.spinnerHex.addChangeListener(this);
     }
   }  
 }

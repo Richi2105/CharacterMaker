@@ -10,6 +10,7 @@ import charmaker2.core.character.CharacterSet;
 import charmaker2.view.CharMakerWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 
 /**
  *
@@ -21,19 +22,29 @@ public class ControlNewCharset implements ActionListener
     private CharMakerWindow view;
     private ControlCharacterSet list;
     
-    public ControlNewCharset(CharMakerWindow view, ControlCharacterSet list)
+    private final JButton buttonNew;
+    
+    private final ControlGrid gridController;
+    
+    public ControlNewCharset(CharMakerWindow view, ControlCharacterSet list, ControlGrid gridController)
     {
         this.view = view;
         this.list = list;
+        this.buttonNew = view.getButtonNew();
         view.getButtonNew().addActionListener(this);
-        view.getButtonNew().setText("New Character Set");
+        this.gridController = gridController;
+    }
+    
+    public void setLabels()
+    {
+      this.buttonNew.setText("New Character Set");
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        int x = (int) view.getSpinnerColumns().getValue();
-        int y = (int) view.getSpinnerRows().getValue();
+        int x = this.gridController.getXDimension();
+        int y = this.gridController.getYDimension();
         String name = view.getTextFieldFontName().getText();
         CharacterSet set = new CharacterSet(x, y, name);
         
@@ -42,8 +53,5 @@ public class ControlNewCharset implements ActionListener
             set.addCharacter(c, new DataGrid(x, y));
         }
         list.setCurrentCharacterSet(set);
-    }
-    
-    
-    
+    }    
 }

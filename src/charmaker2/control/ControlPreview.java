@@ -67,34 +67,39 @@ public class ControlPreview implements ActionListener {
     this.textAreaPreviewText.setText("Preview Text");
   }
   
-  public void addCharacter(char c)
+  public void addCharacter(DataGrid grid)
   {
     Graphics2D g2 = (Graphics2D)this.panelFontPreview.getGraphics();
-    g2.setColor(Color.black);
+    g2.setColor(Color.black);    
+    int pixelSize = (int)this.spinnerPixelSize.getValue();
+
+    Rectangle2D.Float pixel = new Rectangle2D.Float(xPos, yPos, pixelSize, pixelSize);
+
+    for (int i=0; i<grid.getXSize(); i+=1)
+    {
+      for (int j=0; j<grid.getYSize(); j+=1)
+      {
+        if (grid.isSetAt(i, j))
+        {
+        //  pixel.setFrame(xPos+(i*pixelSize), yPos+(j*pixelSize), pixelSize, pixelSize);
+          g2.fillRect(xPos+(i*pixelSize), yPos+(j*pixelSize), pixelSize, pixelSize);
+        //  g2.draw(pixel);
+
+        }
+      }
+    }
+    this.xPos += (grid.getXSize() + 1) * pixelSize;
+    
+    g2.dispose();
+  }
+  
+  public void addCharacter(char c)
+  {
     CharacterDescriptor ch = this.charsetController.getCurrentCharacterSet().getCharacter(c);
     if (ch != null)
     {
-      DataGrid grid = ch.getGrid();
-      int pixelSize = (int)this.spinnerPixelSize.getValue();
-
-      Rectangle2D.Float pixel = new Rectangle2D.Float(xPos, yPos, pixelSize, pixelSize);
-
-      for (int i=0; i<grid.getXSize(); i+=1)
-      {
-        for (int j=0; j<grid.getYSize(); j+=1)
-        {
-          if (grid.isSetAt(i, j))
-          {
-          //  pixel.setFrame(xPos+(i*pixelSize), yPos+(j*pixelSize), pixelSize, pixelSize);
-            g2.fillRect(xPos+(i*pixelSize), yPos+(j*pixelSize), pixelSize, pixelSize);
-          //  g2.draw(pixel);
-
-          }
-        }
-      }
-      this.xPos += (grid.getXSize() + 1) * pixelSize;
+      this.addCharacter(ch.getGrid());
     }
-    g2.dispose();
   }
 
   @Override

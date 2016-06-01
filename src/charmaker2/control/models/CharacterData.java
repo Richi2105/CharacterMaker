@@ -13,6 +13,7 @@ public class CharacterData {
   
   public char character;
   public String description;
+  public int width;
   
   public CharacterData(){}
   

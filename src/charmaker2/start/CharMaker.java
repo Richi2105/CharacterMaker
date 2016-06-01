@@ -8,12 +8,14 @@ package charmaker2.start;
 import charmaker2.util.RSLogger;
 import charmaker2.util.SavedSettings;
 import charmaker2.control.ControlCharacterSet;
+import charmaker2.control.ControlFileIO;
 import charmaker2.control.ControlFileOperation;
 import charmaker2.control.ControlFontSettings;
 import charmaker2.control.ControlGrid;
 import charmaker2.control.ControlHeaderWriter;
 import charmaker2.control.ControlNewCharset;
 import charmaker2.control.ControlPreview;
+import charmaker2.control.ControlSaveLoadCharacterSet;
 import charmaker2.control.ControlSetCharacter;
 import charmaker2.util.RSLogger;
 import charmaker2.util.SavedSettings;
@@ -33,16 +35,27 @@ public class CharMaker {
       CharMakerWindow window = new CharMakerWindow();
       SavedSettings settings = new SavedSettings("settings");
       ControlGrid gridController = new ControlGrid(window);
+      
+      ControlFileIO fileIO = new ControlFileIO(window);
+      fileIO.setDefaults(settings);
+      
       ControlCharacterSet charListController = new ControlCharacterSet(window, gridController);
-      ControlFileOperation fileController = new ControlFileOperation(window, settings);
-      fileController.addCharacterListController(charListController);
+      charListController.setLabels();
+      
+      //ControlFileOperation fileController = new ControlFileOperation(window, settings);
+      //fileController.addCharacterListController(charListController);
       ControlFontSettings fontController = new ControlFontSettings(window);
       ControlHeaderWriter outputController = new ControlHeaderWriter(window, fontController);
-      outputController.setObservable(charListController).setObservable(fileController);
-      ControlNewCharset charsetController = new ControlNewCharset(window, charListController);
-      ControlSetCharacter setCharController = new ControlSetCharacter(window, charListController, gridController.getGridPane());
+      //outputController.setObservable(charListController).setObservable(fileController);
+      
+      ControlNewCharset charsetController = new ControlNewCharset(window, charListController, gridController);
+      
       ControlPreview preview = new ControlPreview(window, charListController);
       preview.setLabels();
+      charListController.setPreviewController(preview);
+      
+      ControlSaveLoadCharacterSet io = new ControlSaveLoadCharacterSet(window, charListController, fileIO);
+      io.setLabels();
       
       window.setVisible(true);
       

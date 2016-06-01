@@ -7,12 +7,13 @@
 package charmaker2.core;
 
 import java.awt.image.Raster;
+import java.io.Serializable;
 
 /**
  *
  * @author Richard
  */
-public class DataGrid
+public class DataGrid implements Serializable
 {
   private boolean grid[][];
   protected int xSize;

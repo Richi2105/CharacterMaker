@@ -1,0 +1,124 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package charmaker2.control;
+
+import charmaker2.core.character.CharacterSet;
+import charmaker2.util.RSLogger;
+import charmaker2.view.CharMakerWindow;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.logging.Level;
+import javax.swing.JMenuItem;
+
+/**
+ *
+ * @author Richard
+ */
+public class ControlSaveLoadCharacterSet implements ActionListener, Observer {
+  
+  private int operation;
+  
+  private final int OPERATION_LOAD = 1;
+  private final int OPERATION_SAVE = 2;
+  private final int NOPERATION = 0;
+  
+  private final JMenuItem itemSave;
+  private final JMenuItem itemLoad;
+  
+  private final ControlCharacterSet characterSetController;
+  private final ControlFileIO fileIO;
+  
+  public ControlSaveLoadCharacterSet(CharMakerWindow view, ControlCharacterSet characterSetController, ControlFileIO fileIO)
+  {
+    this.operation = 0;
+    
+    this.itemLoad = view.getMenuItemLoadCharacterSet();
+    this.itemSave = view.getMenuItemSaveCharacterSet();
+    
+    this.itemLoad.addActionListener(this);
+    this.itemSave.addActionListener(this);
+    
+    this.characterSetController = characterSetController;
+    this.fileIO = fileIO;
+  }
+  
+  public void setLabels()
+  {
+    this.itemLoad.setText("Load Character Set");
+    this.itemSave.setText("Save Character Set");
+  }
+  
+  public void saveCharacterSet(String toFile) throws FileNotFoundException, IOException
+  {
+    FileOutputStream fos = new FileOutputStream(new File(toFile));
+    BufferedOutputStream buffout = new BufferedOutputStream(fos);
+    ObjectOutputStream oos = new ObjectOutputStream(buffout);
+    oos.writeObject(this.characterSetController.getCurrentCharacterSet());
+    oos.flush();
+    oos.close();
+  }
+  
+  public void loadCharacterSet(String fromFile) throws FileNotFoundException, IOException, ClassNotFoundException
+  {
+    FileInputStream fis = new FileInputStream(new File(fromFile));
+    BufferedInputStream buffin = new BufferedInputStream(fis);
+    ObjectInputStream ois = new ObjectInputStream(buffin);
+    CharacterSet charSet = (CharacterSet) ois.readObject();
+    ois.close();
+    
+    this.characterSetController.setCurrentCharacterSet(charSet);
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    this.fileIO.addObserver(this);
+    if (e.getSource() == this.itemLoad)
+    {
+      this.operation = OPERATION_LOAD;
+      this.fileIO.showOpenDialog();
+    }
+    else if (e.getSource() == this.itemSave)
+    {
+      this.operation = OPERATION_SAVE;
+      this.fileIO.showSaveDialog();
+    }
+  }
+
+  @Override
+  public void update(Observable o, Object arg) {
+    try {
+      switch (this.operation) {
+        case OPERATION_LOAD: {
+          this.loadCharacterSet(this.fileIO.getFile());
+          this.operation = NOPERATION;
+          break;
+        }
+        case OPERATION_SAVE: {
+          this.saveCharacterSet(this.fileIO.getFile());
+          this.operation = NOPERATION;
+          break;
+        }
+        default: break;
+      }
+    }
+    catch (Exception ex)
+    {
+      RSLogger.getLogger().log(Level.SEVERE, null, ex);
+    }
+  }
+  
+}

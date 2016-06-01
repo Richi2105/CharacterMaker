@@ -7,12 +7,13 @@
 package charmaker2.core.character;
 
 import charmaker2.core.DataGrid;
+import java.io.Serializable;
 
 /**
  *
  * @author Richard
  */
-public class CharacterDescriptor
+public class CharacterDescriptor implements Serializable
 {
   private DataGrid characterGrid;
   private String descriptor;
@@ -41,14 +42,29 @@ public class CharacterDescriptor
     return characterGrid.getXSize();
   }
   
+  public void setWidth(int width)
+  {
+    this.characterGrid = new DataGrid(width, this.characterGrid.getYSize());
+  }
+  
   public String getDescriptor()
   {
     return descriptor;
   }
   
+  public void setDescription(String description)
+  {
+    this.descriptor = description;
+  }
+  
   public char getCharacter()
   {
     return this.character;
+  }
+  
+  public void setCharacter(char c)
+  {
+    this.character = c;
   }
   
 }
