@@ -32,7 +32,7 @@ public class CharacterSet extends AbstractListModel<String> implements Serializa
     this.fontWidth = width;
     this.fontName = fontName;
     
-    RSLogger.getLogger().log(Level.INFO, String.format("new Character set: %s, height: %d", fontName, height));
+    RSLogger.getLogger().log(Level.INFO, String.format("new Character set: %s, height: %d, width: %d", fontName, height, width));
   }
   
   public CharacterDescriptor getCharacterAt(int index)
@@ -67,43 +67,30 @@ public class CharacterSet extends AbstractListModel<String> implements Serializa
   
   public void addCharacter(char character, Raster raster)
   {
-    characters.add(new CharacterDescriptor(DataGrid.convert(raster, fontHeight), Char2Description.getDescription(character), character, fontWidth));
+    if (this.fontWidth == 0)
+      characters.add(new CharacterDescriptor(DataGrid.convert(raster, fontHeight),
+                                             Char2Description.getDescription(character),
+                                             character));
+    else
+      characters.add(new CharacterDescriptor(DataGrid.convert(raster, fontHeight, fontWidth),
+                                             Char2Description.getDescription(character),
+                                             character));
+    
     this.fireContentsChanged(this, this.characters.size()-1, this.characters.size());
     RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
   }
   
   public void addCharacter(char character, DataGrid grid)
   {
-    if (this.fontWidth == 0)
-      characters.add(new CharacterDescriptor(grid, Char2Description.getDescription(character), character, grid.getXSize()));
-    else
-      characters.add(new CharacterDescriptor(grid, Char2Description.getDescription(character), character, fontWidth));
+    characters.add(new CharacterDescriptor(grid, Char2Description.getDescription(character), character));
     this.fireContentsChanged(this, this.characters.size()-1, this.characters.size());
     RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
 
-  }
-  
-  public void addCharacter(char character, DataGrid grid, int width)
-  {
-    characters.add(new CharacterDescriptor(grid, Char2Description.getDescription(character), character, width));
-    this.fireContentsChanged(this, this.characters.size()-1, this.characters.size());
-    RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
   }
   
   public void addCharacter(char character, String description, DataGrid grid)
   {
-    if (this.fontWidth == 0)
-      characters.add(new CharacterDescriptor(grid, description, character, grid.getXSize()));
-    else
-      characters.add(new CharacterDescriptor(grid, description, character, fontWidth));
-    this.fireContentsChanged(this, this.characters.size()-1, this.characters.size());
-    RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
-
-  }
-  
-  public void addCharacter(char character, String description, DataGrid grid, int width)
-  {
-    characters.add(new CharacterDescriptor(grid, description, character, width));
+    characters.add(new CharacterDescriptor(grid, description, character));
     this.fireContentsChanged(this, this.characters.size()-1, this.characters.size());
     RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
   }

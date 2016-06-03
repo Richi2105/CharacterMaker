@@ -96,7 +96,7 @@ public class BitmapReader
       char c = (char) ((Integer.decode(attributes.getNamedItem("id").getNodeValue())) & 0xFF);
       
 //      RSLogger.getLogger().log(Level.INFO, String.format("character %s @ %d,%d,%d,%d", c, xStart,yStart,xEnd,yEnd));
-      charSet.addCharacter(c, DataGrid.convert(images.get(page).getData(new Rectangle(xStart, yStart, xEnd, yEnd)), xOffset, yOffset, size));
+      charSet.addCharacter(c, DataGrid.convert(images.get(page).getData(new Rectangle(xStart, yStart, xEnd, yEnd)), xOffset, yOffset, size, 0));
       
     }
   }

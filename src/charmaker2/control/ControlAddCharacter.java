@@ -5,17 +5,17 @@
  */
 package charmaker2.control;
 
+import charmaker2.control.dialog.DialogShowBaseClass;
 import charmaker2.control.models.CharacterData;
 import charmaker2.control.models.SpinnerDecimalModel;
 import charmaker2.control.models.SpinnerHexaModel;
 import charmaker2.core.character.CharacterDescriptor;
 import charmaker2.view.CharMakerWindow;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import javafx.beans.InvalidationListener;
 import javax.swing.JButton;
-import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
@@ -25,34 +25,35 @@ import javax.swing.event.ChangeListener;
  *
  * @author Richard
  */
-public class ControlAddCharacter extends Observable implements ActionListener, ChangeListener {
-  
-  private final JDialog dialog;
-  private final Object semaphore;
-  private int dialogReturn;
-  
+public class ControlAddCharacter extends DialogShowBaseClass implements ActionListener, ChangeListener {
+    
   private final JButton buttonOK;
   private final JButton buttonCancel;
   private final JSpinner spinnerInt;
   private final JSpinner spinnerHex;
+  private final JSpinner spinnerColumns;
   private final JTextField textFieldCharacter;
   private final JTextField textFieldDescription;
   
+  private final JLabel labelCharacter;
+  private final JLabel labelCharacterChar;
+  private final JLabel labelCharacterDec;
+  private final JLabel labelCharacterHex;
+  private final JLabel labelDescription;
+  private final JLabel labelColumns;
+  
   private final SpinnerDecimalModel spinnerModelDecimal;
   private final SpinnerHexaModel spinnerModelHex;
+  private final SpinnerDecimalModel spinnerModelColumns;
   
   private final CharacterData characterData;
-  
-  private boolean wait;
-  
-  private InvalidationListener listener;
   
   public final int DIALOG_OK = 1;
   public final int DIALOG_CANCEL = 0;
   
   public ControlAddCharacter(CharMakerWindow view)
   {
-    this.dialog = view.getDialogAddCharacter();
+    super(view.getDialogAddCharacter());
     
     view.getDialogButtonCancel().setText("Cancel");
     view.getDialogButtonOK().setText("OK");
@@ -63,20 +64,24 @@ public class ControlAddCharacter extends Observable implements ActionListener, C
     this.buttonCancel.addActionListener(this);
     this.buttonOK.addActionListener(this);
     
-    view.getDialogLabelCharacter().setText("Character");
-    view.getDialogLabelCharacterChar().setText("char");
-    view.getDialogLabelCharacterHex().setText("Hex");
-    view.getDialogLabelCharacterInt().setText("Dec");
-    view.getDialogLabelDescription().setText("Description");
+    this.labelCharacter = view.getDialogLabelCharacter();
+    this.labelCharacterChar = view.getDialogLabelCharacterChar();
+    this.labelCharacterHex = view.getDialogLabelCharacterHex();
+    this.labelCharacterDec = view.getDialogLabelCharacterInt();
+    this.labelDescription = view.getDialogLabelDescription();
+    this.labelColumns = view.getDialogLabelColumns();
     
     this.spinnerInt = view.getDialogSpinnerCharacterInt();
     this.spinnerHex = view.getDialogSpinnerCharacterHex();
+    this.spinnerColumns = view.getDialogSpinnerColumns();
     
     this.spinnerModelDecimal = new SpinnerDecimalModel(0, 255);
     this.spinnerModelHex = new SpinnerHexaModel(0, 255);
+    this.spinnerModelColumns = new SpinnerDecimalModel(1, 32);
     
     this.spinnerInt.setModel(spinnerModelDecimal);
     this.spinnerHex.setModel(spinnerModelHex);
+    this.spinnerColumns.setModel(spinnerModelColumns);
     
     this.spinnerInt.addChangeListener(this);
     this.spinnerHex.addChangeListener(this);
@@ -89,19 +94,22 @@ public class ControlAddCharacter extends Observable implements ActionListener, C
     
     this.characterData = new CharacterData();
     
-    this.listener = null;
-    
-    this.semaphore = new Object();    
+    this.setCharacterChar('a');
+  }
+  
+  public void setLabels()
+  {
+    this.labelCharacter.setText("Character");
+    this.labelCharacterChar.setText("char");
+    this.labelCharacterHex.setText("Hex");
+    this.labelCharacterDec.setText("Dec");
+    this.labelDescription.setText("Description");
+    this.labelColumns.setText("Columns");
   }
   
   public CharacterData getCharacterData()
   {
     return this.characterData;
-  }
-  
-  public int getDialogReturn()
-  {
-    return this.dialogReturn;
   }
   
   private void setCharacterChar(char c)
@@ -130,18 +138,31 @@ public class ControlAddCharacter extends Observable implements ActionListener, C
     this.spinnerHex.addChangeListener(this);
   }
   
-  public void showDialog()
+  public void showDialog(CharacterDescriptor desc, Point p, boolean varColumnWidth)
   {
-    this.dialogReturn = DIALOG_CANCEL;
-    this.dialog.setVisible(true);
-    this.dialog.setEnabled(true);
+    this.spinnerColumns.setEnabled(varColumnWidth);
+    if (desc != null)
+    {
+      this.setCharacterChar(desc.getCharacter());
+      this.textFieldDescription.setText(desc.getDescriptor());
+      this.spinnerModelColumns.setDecimalValue(desc.getWidth());
+    }    
+    this.showDialog(p);
   }
   
-  public void showDialog(CharacterDescriptor desc)
+  public void showDialog(Point p, boolean varColumnWidth)
   {
-    this.setCharacterChar(desc.getCharacter());
-    this.textFieldDescription.setText(desc.getDescriptor());
-    this.showDialog();
+    this.showDialog(null, p, varColumnWidth);
+  }
+
+  public void showDialog(CharacterDescriptor desc, boolean varColumnWidth)
+  {
+    this.showDialog(desc, null, varColumnWidth);
+  }
+  
+  public void showDialog(boolean varColumnWidth)
+  {
+    this.showDialog(null, null, varColumnWidth);
   }
 
   @Override
@@ -149,21 +170,14 @@ public class ControlAddCharacter extends Observable implements ActionListener, C
     
     if (e.getSource() == this.buttonCancel)
     {
-      this.dialog.setVisible(false);
-      this.dialog.setEnabled(false);
-      this.dialogReturn = this.DIALOG_CANCEL;
-      this.setChanged();
-      this.notifyObservers();
+      this.closeDialog(this.DIALOG_CANCEL);
     }
     else if (e.getSource() == this.buttonOK)
     {
-      this.dialog.setVisible(false);
-      this.dialog.setEnabled(false);
-      this.dialogReturn = this.DIALOG_OK;
       this.characterData.character = this.textFieldCharacter.getText().charAt(0);
       this.characterData.description = this.textFieldDescription.getText();
-      this.setChanged();
-      this.notifyObservers();
+      this.characterData.width = this.spinnerModelColumns.getDecimalValue();
+      this.closeDialog(this.DIALOG_OK);
     }
     else if (e.getSource() == this.textFieldCharacter)
     {
@@ -175,10 +189,8 @@ public class ControlAddCharacter extends Observable implements ActionListener, C
   @Override
   public void stateChanged(ChangeEvent e) {
     if (e.getSource() == this.spinnerHex)
-    {
-      
-      this.setCharacterDec(this.spinnerModelHex.getDecimalValue());
-      
+    {      
+      this.setCharacterDec(this.spinnerModelHex.getDecimalValue());      
     }
     else if (e.getSource() == this.spinnerInt)
     {

@@ -7,6 +7,7 @@
 package charmaker2.control;
 
 import charmaker2.control.models.CharacterData;
+import charmaker2.core.DataGrid;
 import charmaker2.core.character.CharacterSet;
 import java.util.Observable;
 import java.util.logging.Level;
@@ -82,6 +83,7 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
     this.currentSelection = -1;
     
     this.addCharacterController = new ControlAddCharacter(view);
+    this.addCharacterController.setLabels();
     this.previewController = null;
     
     this.tabPane = view.getTabbedPaneFont();
@@ -101,9 +103,8 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
     this.buttonSet.setText("Set Character");
     this.buttonEdit.setText("Edit Character");
     
-    this.tabPane.setTitleAt(0, "Grid Options");
-    this.tabPane.setTitleAt(1, "Output Format");
-    this.tabPane.setTitleAt(2, "Character List");
+    this.tabPane.setTitleAt(0, "Output Format");
+    this.tabPane.setTitleAt(1, "Character List");
   }
   
   public void setCurrentCharacterSet(CharacterSet charset)
@@ -141,7 +142,14 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
   
   public void addCharacter(char c, String description)
   {
-    this.charSet.addCharacter(c, description, grid.getGridPane().getGrid());
+    this.charSet.addCharacter(c, description, new DataGrid(charSet.getFontWidth(), charSet.getFontHeight()));
+    this.setChanged();
+    this.notifyObservers();
+  }
+  
+  public void addCharacter(char c, String description, int width)
+  {
+    this.charSet.addCharacter(c, description, new DataGrid(width, this.charSet.getFontHeight()));
     this.setChanged();
     this.notifyObservers();
   }
@@ -164,7 +172,7 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
     {
       this.mode = MODE_ADD;
       this.addCharacterController.addObserver(this);
-      this.addCharacterController.showDialog();      
+      this.addCharacterController.showDialog(this.buttonAdd.getLocationOnScreen(), this.grid.isVariableColumnNumber());
     }
     else if (e.getSource() == this.buttonRemove)
     {
@@ -203,7 +211,7 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
         this.mode = MODE_EDIT;
         this.addCharacterController.addObserver(this);
         CharacterDescriptor selection = this.charSet.getCharacterAt(this.currentSelection);
-        this.addCharacterController.showDialog(selection);
+        this.addCharacterController.showDialog(selection, this.buttonEdit.getLocationOnScreen(), this.grid.isVariableColumnNumber());
       }
     }
   }
@@ -216,15 +224,24 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
       CharacterData d = this.addCharacterController.getCharacterData();
       switch (mode) {
         case MODE_ADD: {          
-          this.addCharacter(d.character, d.description);
+          this.addCharacter(d.character, d.description, d.width);
+          this.currentSelection = this.charSet.getSize()-1;
+          this.characterList.setSelectedIndex(this.currentSelection);
+          this.characterList.ensureIndexIsVisible(this.currentSelection);
+          this.valueChanged(null);
           break;
         }
         case MODE_EDIT: {
           this.getSelectedCharacterDescriptor().setCharacter(d.character);
           this.getSelectedCharacterDescriptor().setDescription(d.description);
+          this.getSelectedCharacterDescriptor().setWidth(d.width);
           this.charSet.update(this.characterList.getSelectedIndex());
+          this.characterList.setSelectedIndex(this.currentSelection);
+          this.characterList.ensureIndexIsVisible(this.currentSelection);
+          this.valueChanged(null);
           break;
         }
+        default: break;
       }
       
     }

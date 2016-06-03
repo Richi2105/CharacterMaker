@@ -6,13 +6,12 @@
 
 package charmaker2.control;
 
+import charmaker2.control.dialog.DialogShowBaseClass;
 import charmaker2.control.models.SpinnerDecimalModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.logging.Level;
-import charmaker2.util.RSLogger;
 import charmaker2.view.CharMakerWindow;
 import charmaker2.view.GridPane;
 import javax.swing.JButton;
@@ -26,40 +25,49 @@ import javax.swing.event.ChangeListener;
  *
  * @author Richard
  */
-public class ControlGrid implements ActionListener, MouseListener, ChangeListener
+public class ControlGrid extends DialogShowBaseClass implements ActionListener, MouseListener, ChangeListener
 {
   private int gridXNumber;
   private int gridYNumber;
   private final GridPane grid;
+  private boolean varColumnNumber;
   
   private final JSpinner spinnerColumns;
   private final JSpinner spinnerRows;
+  private final SpinnerDecimalModel spinnerModelColumns;
+  private final SpinnerDecimalModel spinnerModelRows;
   private final JCheckBox checkBoxVariableColumns;
   
-  private final JButton buttonSetGrid;
+  private final JButton buttonSetGridOK;
+  private final JButton buttonSetGridCancel;
   
   private final JLabel labelColumns;
   private final JLabel labelRows;
   
   public ControlGrid(CharMakerWindow view)
   {    
+    super(view.getDialogNewCharSet());
+    
     gridXNumber = 8;
     gridYNumber = 8;
+    this.varColumnNumber = false;
 
     grid = new GridPane();
     grid.setGrid(gridXNumber, gridYNumber);
     view.getPanelEditor().add(grid);
     grid.setVisible(true);
     
-    this.buttonSetGrid = view.getButtonSetGrid();
-    this.buttonSetGrid.addActionListener(this);
+    this.buttonSetGridOK = view.getDialogButtonGridOK();
+    this.buttonSetGridOK.addActionListener(this);
+    this.buttonSetGridCancel = view.getDialogButtonGridCancel();
+    this.buttonSetGridCancel.addActionListener(this);
     
-    SpinnerDecimalModel sp1 = new SpinnerDecimalModel(5, 32);
-    SpinnerDecimalModel sp2 = new SpinnerDecimalModel(5, 32);
+    this.spinnerModelColumns = new SpinnerDecimalModel(5, 32);
+    this.spinnerModelRows = new SpinnerDecimalModel(5, 32);
     this.spinnerColumns = view.getSpinnerColumns();
     this.spinnerRows = view.getSpinnerRows();
-    this.spinnerColumns.setModel(sp1);
-    this.spinnerRows.setModel(sp2);
+    this.spinnerColumns.setModel(spinnerModelColumns);
+    this.spinnerRows.setModel(spinnerModelRows);
     
     this.spinnerColumns.setValue(gridXNumber);
     this.spinnerRows.setValue(gridYNumber);
@@ -68,6 +76,9 @@ public class ControlGrid implements ActionListener, MouseListener, ChangeListene
     this.spinnerRows.addChangeListener(this);
     
     this.checkBoxVariableColumns = view.getCheckBoxColumns();
+    this.checkBoxVariableColumns.addActionListener(this);
+    this.checkBoxVariableColumns.setSelected(varColumnNumber);
+    
     grid.addMouseListener(this);
     
     this.labelColumns = view.getLabelColumns();
@@ -78,7 +89,9 @@ public class ControlGrid implements ActionListener, MouseListener, ChangeListene
   {
     this.labelColumns.setText("Columns");
     this.labelRows.setText("Rows");
-    this.buttonSetGrid.setText("Set Grid");
+    this.buttonSetGridOK.setText("Set Grid");
+    this.buttonSetGridCancel.setText("Cancel");
+    this.checkBoxVariableColumns.setText("Variable Number of Columns");
   }
   
   public void setDimensions(int xSize, int ySize)
@@ -102,7 +115,7 @@ public class ControlGrid implements ActionListener, MouseListener, ChangeListene
   
   public int getXDimension()
   {
-    if (checkBoxVariableColumns.isSelected())
+    if (this.varColumnNumber)
       return 0;
     else
       return this.gridXNumber;
@@ -112,26 +125,45 @@ public class ControlGrid implements ActionListener, MouseListener, ChangeListene
   {
     return this.gridYNumber;
   }
+  
+  public boolean isVariableColumnNumber()
+  {
+    return this.varColumnNumber;
+  }
 
   @Override
   public void actionPerformed(ActionEvent e)
   {
-    //view.getEditorPane().removeAll();
-    //this.grid.repaint();
-
-    //view.getPanelEditorSettings().repaint();
-    try
+    if (e.getSource() == this.buttonSetGridCancel)
     {
-      this.gridYNumber = Integer.decode(this.spinnerRows.getValue().toString());
-      this.gridXNumber = Integer.decode(this.spinnerColumns.getValue().toString());
+      this.closeDialog(this.DIALOG_CANCEL);
+    }
+    else if (e.getSource() == this.buttonSetGridOK)
+    {
+      this.varColumnNumber = this.checkBoxVariableColumns.isSelected();
+      
+      if (varColumnNumber)
+        this.gridXNumber = 0;
+      else
+        this.gridXNumber = this.spinnerModelRows.getDecimalValue();
+      
+      this.gridYNumber = this.spinnerModelColumns.getDecimalValue();
       grid.setGrid(gridXNumber, gridYNumber);
       this.grid.repaint();
+      this.closeDialog(this.DIALOG_OK);
+    }
+    else if (e.getSource() == this.checkBoxVariableColumns)
+    {
+      if (this.checkBoxVariableColumns.isSelected())
+      {
+        this.spinnerColumns.setEnabled(false);
+      }
+      else
+      {
+        this.spinnerColumns.setEnabled(true);
+      }
     }
 
-    catch (Exception ex)
-    {
-      RSLogger.getLogger().log(Level.WARNING, "Could not decode Integer", ex);
-    }
   }
   
   public GridPane getGridPane()
@@ -168,11 +200,13 @@ public class ControlGrid implements ActionListener, MouseListener, ChangeListene
 
   @Override
   public void stateChanged(ChangeEvent e) {
+  /*
     if (e.getSource() == this.spinnerColumns)
     {
       this.gridXNumber = (int) this.spinnerColumns.getValue();
     }
     else if (e.getSource() == this.spinnerRows)
       this.gridYNumber = (int) this.spinnerRows.getValue();
+  */
   }
 }

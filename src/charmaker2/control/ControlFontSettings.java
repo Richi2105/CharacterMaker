@@ -10,6 +10,8 @@ import charmaker2.view.CharMakerWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
@@ -20,6 +22,13 @@ import javax.swing.JTextField;
 public class ControlFontSettings implements ActionListener
 {
   private ArrayList<JRadioButton> buttons;
+  
+  private JCheckBox checkBoxMirrorHorizontally;
+  private final JCheckBox checkBoxMirrorVertically;
+  
+  private final JLabel labelFontName;
+  private final JLabel labelDataType;
+  
   private int activeButton;
   private JTextField fontName;
   
@@ -31,6 +40,12 @@ public class ControlFontSettings implements ActionListener
     this.buttons.add(view.getRadioButton90());
     this.buttons.add(view.getRadioButton180());
     this.buttons.add(view.getRadioButton270());
+    
+    this.checkBoxMirrorHorizontally = view.getCheckBoxMirrorY();
+    this.checkBoxMirrorVertically = view.getCheckBoxMirrorX();
+    
+    this.labelFontName = view.getLabelFontName();
+    this.labelDataType = view.getLabelDatatype();
 
     for (int i=0; i<4; i+=1)
     {
@@ -38,6 +53,22 @@ public class ControlFontSettings implements ActionListener
     }
     buttons.get(0).setSelected(true);
     this.fontName = view.getTextFieldFontName();
+  }
+  
+  public void setLabels()
+  {
+    this.labelDataType.setText("Data Type");
+    this.labelFontName.setText("Font Name");
+    
+    buttons.get(0).setText("Rotate 0°");
+    buttons.get(1).setText("Rotate 90°");
+    buttons.get(2).setText("Rotate 180°");
+    buttons.get(3).setText("Rotate 270°");
+    
+    this.checkBoxMirrorHorizontally.setText("Mirror Horizontally");
+    this.checkBoxMirrorVertically.setText(("Mirror Vertically"));
+    
+    this.fontName.setText("font");
   }
   
   public JRadioButton getActiveButton()

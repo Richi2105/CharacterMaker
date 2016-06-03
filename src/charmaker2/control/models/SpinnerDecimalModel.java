@@ -35,6 +35,8 @@ public class SpinnerDecimalModel extends AbstractSpinnerModel {
   {
     if (val >= minVal && val <= maxVal)
       currentVal = val;
+    
+    this.fireStateChanged();
   }
 
   @Override

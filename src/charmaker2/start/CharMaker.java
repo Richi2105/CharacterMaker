@@ -35,6 +35,7 @@ public class CharMaker {
       CharMakerWindow window = new CharMakerWindow();
       SavedSettings settings = new SavedSettings("settings");
       ControlGrid gridController = new ControlGrid(window);
+      gridController.setLabels();
       
       ControlFileIO fileIO = new ControlFileIO(window);
       fileIO.setDefaults(settings);
@@ -45,6 +46,7 @@ public class CharMaker {
       //ControlFileOperation fileController = new ControlFileOperation(window, settings);
       //fileController.addCharacterListController(charListController);
       ControlFontSettings fontController = new ControlFontSettings(window);
+      fontController.setLabels();
       ControlHeaderWriter outputController = new ControlHeaderWriter(window, fontController);
       //outputController.setObservable(charListController).setObservable(fileController);
       

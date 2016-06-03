@@ -27,8 +27,6 @@ public class GridPane extends JPanel
   
   private DataGrid grid;
   
-  private int rows;
-  private int columns;
   private int xSize;
   private int ySize;
   private double stepSize;
@@ -38,24 +36,22 @@ public class GridPane extends JPanel
     super();
     line = new Line2D.Double();
     rectangle = new Rectangle2D.Double();
-    columns = 5;
-    rows = 5;
     this.setBackground(Color.white);
     this.setOpaque(true);
     
-    grid = new DataGrid(columns, rows);
+    grid = new DataGrid(8, 8);
   }
   
   private void calculateDimensions()
   {
     xSize = this.getParent().getWidth();
-    stepSize = xSize / columns;
-    ySize = (int) (stepSize * rows);
+    stepSize = xSize / grid.getXSize();
+    ySize = (int) (stepSize * grid.getYSize());
     if (ySize > this.getParent().getHeight())
     {
       ySize = this.getParent().getHeight();
-      stepSize = ySize / rows;
-      xSize = (int) (stepSize * columns);
+      stepSize = ySize / grid.getYSize();
+      xSize = (int) (stepSize * grid.getXSize());
     }
   }
   
@@ -70,16 +66,16 @@ public class GridPane extends JPanel
   
   public void setGrid(int columns, int rows)
   {
+    int col;
     if (columns != 0)
     {
-      this.columns = columns;
+      col = columns;
     }
     else
     {
-      this.columns = 32;
+      col = 1;
     }
-    this.rows = rows;
-    grid.changeGrid(columns, rows);
+    grid.changeGrid(col, rows);
     
     this.repaint();
     
@@ -160,12 +156,12 @@ public class GridPane extends JPanel
   {    
     g2.setColor(Color.black);
     int i;
-    for (i=1; i<columns; i+=1)
+    for (i=1; i<grid.getXSize(); i+=1)
     {
       line.setLine(stepSize*i, 0, stepSize*i, ySize);
       g2.draw(line);
     }
-    for (i=1; i<rows; i+=1)
+    for (i=1; i<grid.getYSize(); i+=1)
     {
       line.setLine(0, stepSize*i, xSize, stepSize*i);
       g2.draw(line);

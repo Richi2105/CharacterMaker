@@ -30,20 +30,31 @@ public class CharMakerWindow extends javax.swing.JFrame {
 
     jFileChooser1 = new javax.swing.JFileChooser();
     dialogAddCharacter = new javax.swing.JDialog();
-    jPanel3 = new javax.swing.JPanel();
     dialogLabelCharacter = new javax.swing.JLabel();
+    dialogLabelDescription = new javax.swing.JLabel();
+    dialogTextFieldDescription = new javax.swing.JTextField();
+    dialogLabelColumns = new javax.swing.JLabel();
+    dialogSpinnerColumns = new javax.swing.JSpinner();
+    jPanel3 = new javax.swing.JPanel();
     dialogLabelCharacterChar = new javax.swing.JLabel();
     dialogTextFieldCharacterChar = new javax.swing.JTextField();
     dialogLabelCharacterInt = new javax.swing.JLabel();
     dialogSpinnerCharacterInt = new javax.swing.JSpinner();
     dialogLabelCharacterHex = new javax.swing.JLabel();
     dialogSpinnerCharacterHex = new javax.swing.JSpinner();
-    jPanel7 = new javax.swing.JPanel();
-    dialogLabelDescription = new javax.swing.JLabel();
-    dialogTextFieldDescription = new javax.swing.JTextField();
     jPanel9 = new javax.swing.JPanel();
     dialogButtonOK = new javax.swing.JButton();
     dialogButtonCancel = new javax.swing.JButton();
+    dialogNewCharSet = new javax.swing.JDialog();
+    labelColumns = new javax.swing.JLabel();
+    labelRows = new javax.swing.JLabel();
+    spinnerRows = new javax.swing.JSpinner();
+    jPanel12 = new javax.swing.JPanel();
+    spinnerColumns = new javax.swing.JSpinner();
+    checkBoxColumns = new javax.swing.JCheckBox();
+    jPanel11 = new javax.swing.JPanel();
+    dialogButtonGridOK = new javax.swing.JButton();
+    dialogButtonGridCancel = new javax.swing.JButton();
     jPanel1 = new javax.swing.JPanel();
     panelInput = new javax.swing.JPanel();
     panelFileOperation = new javax.swing.JPanel();
@@ -53,13 +64,6 @@ public class CharMakerWindow extends javax.swing.JFrame {
     panelEditorInput = new javax.swing.JPanel();
     panelEditor = new javax.swing.JPanel();
     tabbedPaneFont = new javax.swing.JTabbedPane();
-    panelEditorControl = new javax.swing.JPanel();
-    labelColumns = new javax.swing.JLabel();
-    spinnerColumns = new javax.swing.JSpinner();
-    checkBoxColumns = new javax.swing.JCheckBox();
-    labelRows = new javax.swing.JLabel();
-    spinnerRows = new javax.swing.JSpinner();
-    buttonSetGrid = new javax.swing.JButton();
     panelHeaderControl = new javax.swing.JPanel();
     labelDatatype = new javax.swing.JLabel();
     comboBoxDatatype = new javax.swing.JComboBox<>();
@@ -106,61 +110,99 @@ public class CharMakerWindow extends javax.swing.JFrame {
     jSeparator3 = new javax.swing.JPopupMenu.Separator();
     menuItemWriteHeader = new javax.swing.JMenuItem();
 
+    dialogAddCharacter.setAlwaysOnTop(true);
     dialogAddCharacter.setMinimumSize(new java.awt.Dimension(350, 150));
-    dialogAddCharacter.getContentPane().setLayout(new javax.swing.BoxLayout(dialogAddCharacter.getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
-
-    jPanel3.setLayout(new java.awt.GridBagLayout());
+    dialogAddCharacter.getContentPane().setLayout(new java.awt.GridBagLayout());
 
     dialogLabelCharacter.setText("jLabel1");
     gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
-    jPanel3.add(dialogLabelCharacter, gridBagConstraints);
-
-    dialogLabelCharacterChar.setText("jLabel2");
-    jPanel3.add(dialogLabelCharacterChar, new java.awt.GridBagConstraints());
-
-    dialogTextFieldCharacterChar.setText("jTextField1");
-    dialogTextFieldCharacterChar.setMinimumSize(new java.awt.Dimension(22, 22));
-    jPanel3.add(dialogTextFieldCharacterChar, new java.awt.GridBagConstraints());
-
-    dialogLabelCharacterInt.setText("jLabel3");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 3;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-    jPanel3.add(dialogLabelCharacterInt, gridBagConstraints);
-
-    dialogSpinnerCharacterInt.setMinimumSize(new java.awt.Dimension(40, 22));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 4;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-    jPanel3.add(dialogSpinnerCharacterInt, gridBagConstraints);
-
-    dialogLabelCharacterHex.setText("jLabel1");
-    jPanel3.add(dialogLabelCharacterHex, new java.awt.GridBagConstraints());
-
-    dialogSpinnerCharacterHex.setMinimumSize(new java.awt.Dimension(60, 22));
-    jPanel3.add(dialogSpinnerCharacterHex, new java.awt.GridBagConstraints());
-
-    dialogAddCharacter.getContentPane().add(jPanel3);
-
-    jPanel7.setLayout(new java.awt.GridBagLayout());
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+    dialogAddCharacter.getContentPane().add(dialogLabelCharacter, gridBagConstraints);
 
     dialogLabelDescription.setText("jLabel4");
     gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 1;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-    jPanel7.add(dialogLabelDescription, gridBagConstraints);
+    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+    dialogAddCharacter.getContentPane().add(dialogLabelDescription, gridBagConstraints);
 
     dialogTextFieldDescription.setText("jTextField2");
     gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+    gridBagConstraints.gridx = 1;
+    gridBagConstraints.gridy = 1;
     gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    jPanel7.add(dialogTextFieldDescription, gridBagConstraints);
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+    gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
+    dialogAddCharacter.getContentPane().add(dialogTextFieldDescription, gridBagConstraints);
 
-    dialogAddCharacter.getContentPane().add(jPanel7);
+    dialogLabelColumns.setText("jLabel1");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 2;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+    dialogAddCharacter.getContentPane().add(dialogLabelColumns, gridBagConstraints);
+
+    dialogSpinnerColumns.setMinimumSize(new java.awt.Dimension(40, 22));
+    dialogSpinnerColumns.setPreferredSize(new java.awt.Dimension(40, 22));
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 1;
+    gridBagConstraints.gridy = 2;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+    gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
+    dialogAddCharacter.getContentPane().add(dialogSpinnerColumns, gridBagConstraints);
+
+    dialogLabelCharacterChar.setText("jLabel2");
+
+    dialogTextFieldCharacterChar.setText("jTextField1");
+    dialogTextFieldCharacterChar.setMinimumSize(new java.awt.Dimension(22, 22));
+    dialogTextFieldCharacterChar.setPreferredSize(new java.awt.Dimension(40, 22));
+
+    dialogLabelCharacterInt.setText("jLabel3");
+
+    dialogSpinnerCharacterInt.setMinimumSize(new java.awt.Dimension(40, 22));
+    dialogSpinnerCharacterInt.setPreferredSize(new java.awt.Dimension(40, 22));
+
+    dialogLabelCharacterHex.setText("jLabel1");
+
+    dialogSpinnerCharacterHex.setMinimumSize(new java.awt.Dimension(60, 22));
+    dialogSpinnerCharacterHex.setPreferredSize(new java.awt.Dimension(60, 22));
+
+    javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+    jPanel3.setLayout(jPanel3Layout);
+    jPanel3Layout.setHorizontalGroup(
+      jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel3Layout.createSequentialGroup()
+        .addComponent(dialogLabelCharacterChar)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(dialogTextFieldCharacterChar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(dialogLabelCharacterInt)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(dialogSpinnerCharacterInt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(dialogLabelCharacterHex)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(dialogSpinnerCharacterHex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+    jPanel3Layout.setVerticalGroup(
+      jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addComponent(dialogLabelCharacterChar)
+        .addComponent(dialogTextFieldCharacterChar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(dialogLabelCharacterInt)
+        .addComponent(dialogSpinnerCharacterInt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(dialogLabelCharacterHex)
+        .addComponent(dialogSpinnerCharacterHex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+    );
+
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+    gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
+    dialogAddCharacter.getContentPane().add(jPanel3, gridBagConstraints);
 
     dialogButtonOK.setText("jButton1");
     jPanel9.add(dialogButtonOK);
@@ -168,7 +210,75 @@ public class CharMakerWindow extends javax.swing.JFrame {
     dialogButtonCancel.setText("jButton2");
     jPanel9.add(dialogButtonCancel);
 
-    dialogAddCharacter.getContentPane().add(jPanel9);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 1;
+    gridBagConstraints.gridy = 3;
+    dialogAddCharacter.getContentPane().add(jPanel9, gridBagConstraints);
+
+    dialogNewCharSet.setMinimumSize(new java.awt.Dimension(250, 150));
+    dialogNewCharSet.setPreferredSize(new java.awt.Dimension(250, 150));
+    dialogNewCharSet.getContentPane().setLayout(new java.awt.GridBagLayout());
+
+    labelColumns.setText("jLabel4");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+    dialogNewCharSet.getContentPane().add(labelColumns, gridBagConstraints);
+
+    labelRows.setText("jLabel5");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 1;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+    dialogNewCharSet.getContentPane().add(labelRows, gridBagConstraints);
+
+    spinnerRows.setMinimumSize(new java.awt.Dimension(40, 22));
+    spinnerRows.setPreferredSize(new java.awt.Dimension(40, 22));
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 1;
+    gridBagConstraints.gridy = 1;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+    gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
+    dialogNewCharSet.getContentPane().add(spinnerRows, gridBagConstraints);
+
+    spinnerColumns.setMinimumSize(new java.awt.Dimension(40, 22));
+    spinnerColumns.setPreferredSize(new java.awt.Dimension(40, 22));
+
+    checkBoxColumns.setText("jCheckBox3");
+
+    javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+    jPanel12.setLayout(jPanel12Layout);
+    jPanel12Layout.setHorizontalGroup(
+      jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+        .addComponent(spinnerColumns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(checkBoxColumns)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+    jPanel12Layout.setVerticalGroup(
+      jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addComponent(spinnerColumns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(checkBoxColumns))
+    );
+
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+    gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
+    dialogNewCharSet.getContentPane().add(jPanel12, gridBagConstraints);
+
+    dialogButtonGridOK.setText("jButton1");
+    jPanel11.add(dialogButtonGridOK);
+
+    dialogButtonGridCancel.setText("jButton2");
+    jPanel11.add(dialogButtonGridCancel);
+
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 1;
+    gridBagConstraints.gridy = 2;
+    dialogNewCharSet.getContentPane().add(jPanel11, gridBagConstraints);
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -192,69 +302,39 @@ public class CharMakerWindow extends javax.swing.JFrame {
     panelEditor.setLayout(new java.awt.GridLayout(1, 0));
     panelEditorInput.add(panelEditor);
 
-    panelEditorControl.setLayout(new java.awt.GridBagLayout());
-
-    labelColumns.setText("jLabel4");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-    panelEditorControl.add(labelColumns, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-    panelEditorControl.add(spinnerColumns, gridBagConstraints);
-
-    checkBoxColumns.setText("jCheckBox3");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-    panelEditorControl.add(checkBoxColumns, gridBagConstraints);
-
-    labelRows.setText("jLabel5");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-    panelEditorControl.add(labelRows, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-    panelEditorControl.add(spinnerRows, gridBagConstraints);
-
-    buttonSetGrid.setText("jButton8");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-    panelEditorControl.add(buttonSetGrid, gridBagConstraints);
-
-    tabbedPaneFont.addTab("tab1", panelEditorControl);
-
     panelHeaderControl.setLayout(new java.awt.GridBagLayout());
 
     labelDatatype.setText("jLabel2");
     gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(labelDatatype, gridBagConstraints);
 
     comboBoxDatatype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
     gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(comboBoxDatatype, gridBagConstraints);
 
     labelFontName.setText("jLabel3");
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridy = 1;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(labelFontName, gridBagConstraints);
 
     textFieldFontName.setText("jTextField1");
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridy = 1;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(textFieldFontName, gridBagConstraints);
 
     radioButton0.setText("jRadioButton1");
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridy = 2;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(radioButton0, gridBagConstraints);
 
@@ -262,6 +342,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 3;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(radioButton90, gridBagConstraints);
 
@@ -269,6 +350,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 4;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(radioButton180, gridBagConstraints);
 
@@ -276,6 +358,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 5;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(radioButton270, gridBagConstraints);
 
@@ -283,6 +366,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 3;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(checkBoxMirrorX, gridBagConstraints);
 
@@ -290,6 +374,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 4;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(checkBoxMirrorY, gridBagConstraints);
 
@@ -301,6 +386,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
 
     buttonAddChar.setText("jButton3");
     gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
     jPanel2.add(buttonAddChar, gridBagConstraints);
 
@@ -308,18 +394,21 @@ public class CharMakerWindow extends javax.swing.JFrame {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 3;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
     jPanel2.add(buttonEditChar, gridBagConstraints);
 
     buttonRemoveChar.setText("jButton4");
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridy = 1;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
     jPanel2.add(buttonRemoveChar, gridBagConstraints);
 
     buttonSortChars.setText("jButton5");
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridy = 2;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
     jPanel2.add(buttonSortChars, gridBagConstraints);
 
@@ -340,6 +429,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
       public int getSize() { return strings.length; }
       public String getElementAt(int i) { return strings[i]; }
     });
+    listChars.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     jScrollPane2.setViewportView(listChars);
 
     jPanel6.add(jScrollPane2);
@@ -364,10 +454,11 @@ public class CharMakerWindow extends javax.swing.JFrame {
 
     jPanel4.add(jScrollPane1);
 
-    jPanel8.setLayout(new java.awt.GridLayout(1, 0));
-
     labelPreviewPixelSize.setText("jLabel1");
     jPanel8.add(labelPreviewPixelSize);
+
+    spinnerPreviewPixelSize.setMinimumSize(new java.awt.Dimension(40, 22));
+    spinnerPreviewPixelSize.setPreferredSize(new java.awt.Dimension(40, 22));
     jPanel8.add(spinnerPreviewPixelSize);
 
     jPanel4.add(jPanel8);
@@ -384,11 +475,11 @@ public class CharMakerWindow extends javax.swing.JFrame {
     panelPreviewFont.setLayout(panelPreviewFontLayout);
     panelPreviewFontLayout.setHorizontalGroup(
       panelPreviewFontLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 434, Short.MAX_VALUE)
+      .addGap(0, 355, Short.MAX_VALUE)
     );
     panelPreviewFontLayout.setVerticalGroup(
       panelPreviewFontLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 178, Short.MAX_VALUE)
+      .addGap(0, 174, Short.MAX_VALUE)
     );
 
     panelPreview.add(panelPreviewFont, java.awt.BorderLayout.CENTER);
@@ -476,7 +567,6 @@ public class CharMakerWindow extends javax.swing.JFrame {
   private javax.swing.JButton buttonRemoveChar;
   private javax.swing.JButton buttonSave;
   private javax.swing.JButton buttonSetChar;
-  private javax.swing.JButton buttonSetGrid;
   private javax.swing.JButton buttonShowPreview;
   private javax.swing.JButton buttonSortChars;
   private javax.swing.JCheckBox checkBoxColumns;
@@ -485,14 +575,19 @@ public class CharMakerWindow extends javax.swing.JFrame {
   private javax.swing.JComboBox<String> comboBoxDatatype;
   private javax.swing.JDialog dialogAddCharacter;
   private javax.swing.JButton dialogButtonCancel;
+  private javax.swing.JButton dialogButtonGridCancel;
+  private javax.swing.JButton dialogButtonGridOK;
   private javax.swing.JButton dialogButtonOK;
   private javax.swing.JLabel dialogLabelCharacter;
   private javax.swing.JLabel dialogLabelCharacterChar;
   private javax.swing.JLabel dialogLabelCharacterHex;
   private javax.swing.JLabel dialogLabelCharacterInt;
+  private javax.swing.JLabel dialogLabelColumns;
   private javax.swing.JLabel dialogLabelDescription;
+  private javax.swing.JDialog dialogNewCharSet;
   private javax.swing.JSpinner dialogSpinnerCharacterHex;
   private javax.swing.JSpinner dialogSpinnerCharacterInt;
+  private javax.swing.JSpinner dialogSpinnerColumns;
   private javax.swing.JTextField dialogTextFieldCharacterChar;
   private javax.swing.JTextField dialogTextFieldDescription;
   private javax.swing.JFileChooser jFileChooser1;
@@ -500,12 +595,13 @@ public class CharMakerWindow extends javax.swing.JFrame {
   private javax.swing.JMenu jMenu2;
   private javax.swing.JMenuBar jMenuBar1;
   private javax.swing.JPanel jPanel1;
+  private javax.swing.JPanel jPanel11;
+  private javax.swing.JPanel jPanel12;
   private javax.swing.JPanel jPanel2;
   private javax.swing.JPanel jPanel3;
   private javax.swing.JPanel jPanel4;
   private javax.swing.JPanel jPanel5;
   private javax.swing.JPanel jPanel6;
-  private javax.swing.JPanel jPanel7;
   private javax.swing.JPanel jPanel8;
   private javax.swing.JPanel jPanel9;
   private javax.swing.JScrollPane jScrollPane1;
@@ -527,7 +623,6 @@ public class CharMakerWindow extends javax.swing.JFrame {
   private javax.swing.JMenuItem menuItemWriteHeader;
   private javax.swing.JPanel panelCharacters;
   private javax.swing.JPanel panelEditor;
-  private javax.swing.JPanel panelEditorControl;
   private javax.swing.JPanel panelEditorInput;
   private javax.swing.JPanel panelFileOperation;
   private javax.swing.JPanel panelHeaderControl;
@@ -602,12 +697,6 @@ public class CharMakerWindow extends javax.swing.JFrame {
         return buttonSetChar;
     }
 
-    /**
-     * @return the buttonSetGrid
-     */
-    public javax.swing.JButton getButtonSetGrid() {
-        return buttonSetGrid;
-    }
 
     /**
      * @return the buttonShowPreview
@@ -915,5 +1004,40 @@ public class CharMakerWindow extends javax.swing.JFrame {
    */
   public javax.swing.JButton getButtonEditChar() {
     return buttonEditChar;
+  }
+
+  /**
+   * @return the dialogLabelColumns
+   */
+  public javax.swing.JLabel getDialogLabelColumns() {
+    return dialogLabelColumns;
+  }
+
+  /**
+   * @return the dialogSpinnerColumns
+   */
+  public javax.swing.JSpinner getDialogSpinnerColumns() {
+    return dialogSpinnerColumns;
+  }
+
+  /**
+   * @return the dialogButtonGridCancel
+   */
+  public javax.swing.JButton getDialogButtonGridCancel() {
+    return dialogButtonGridCancel;
+  }
+
+  /**
+   * @return the dialogButtonGridOK
+   */
+  public javax.swing.JButton getDialogButtonGridOK() {
+    return dialogButtonGridOK;
+  }
+
+  /**
+   * @return the dialogNewCharSet
+   */
+  public javax.swing.JDialog getDialogNewCharSet() {
+    return dialogNewCharSet;
   }
 }

@@ -21,16 +21,24 @@ public class DataGrid implements Serializable
   
   public DataGrid(int xGrid, int yGrid)
   {
-    this.xSize = xGrid;
+    if (xGrid == 0)
+      this.xSize = 1;
+    else
+      this.xSize = xGrid;
+    
     this.ySize = yGrid;
-    this.changeGrid(xGrid, yGrid);
+    grid = new boolean[xSize][ySize];
   }
   
   public void changeGrid(int xGrid, int yGrid)
   {
-    this.xSize = xGrid;
+    if (xGrid == 0)
+      this.xSize = 1;
+    else
+      this.xSize = xGrid;
+    
     this.ySize = yGrid;
-    grid = new boolean[xGrid][yGrid];
+    grid = new boolean[xSize][ySize];
   }
   
   public int getXSize()
@@ -78,14 +86,28 @@ public class DataGrid implements Serializable
     grid[pos.getX()][pos.getY()] = false;
   }
   
-  public static DataGrid convert(Raster raster, int height)
+  public static DataGrid convert(Raster raster)
   {
-    return DataGrid.convert(raster, 0, 0, height);
+    return DataGrid.convert(raster, 0);
   }
   
-  public static DataGrid convert(Raster raster, int xOffset, int yOffset, int height)
+  public static DataGrid convert(Raster raster, int height)
   {
-    int xSize = raster.getWidth()+xOffset+xOffset;
+    return DataGrid.convert(raster, 0, 0, height, 0);
+  }
+  
+  public static DataGrid convert(Raster raster, int height, int width)
+  {
+    return DataGrid.convert(raster, 0, 0, height, width);
+  }
+  
+  public static DataGrid convert(Raster raster, int xOffset, int yOffset, int height, int width)
+  {
+    int xSize;
+    if (width == 0)
+      xSize = raster.getWidth()+xOffset+xOffset;
+    else
+      xSize = width;
     int ySize;
     if (height == 0)
       ySize = raster.getHeight()+yOffset+yOffset;
@@ -110,6 +132,13 @@ public class DataGrid implements Serializable
     }
     
     return dgrid;
+  }
+  
+  public DataGrid copy()
+  {
+    DataGrid newgrid = new DataGrid(0, 0);
+    newgrid.copy(this);
+    return newgrid;
   }
   
   public void copy(DataGrid anotherGrid)

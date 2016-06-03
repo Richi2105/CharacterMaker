@@ -18,12 +18,11 @@ public class CharacterDescriptor implements Serializable
   private DataGrid characterGrid;
   private String descriptor;
   private char character;
-  private int width;
-  public CharacterDescriptor(DataGrid grid, String description, char c, int width)
+  
+  public CharacterDescriptor(DataGrid grid, String description, char c)
   {
-    this.characterGrid = grid;
+    this.characterGrid = grid.copy();
     this.descriptor = description;
-    this.width = width;
     this.character = c;
   }
   
@@ -39,7 +38,7 @@ public class CharacterDescriptor implements Serializable
   
   public int getWidth()
   {
-    return characterGrid.getXSize();
+    return this.characterGrid.getXSize();
   }
   
   public void setWidth(int width)

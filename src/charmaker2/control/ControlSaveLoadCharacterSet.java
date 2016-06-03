@@ -72,15 +72,21 @@ public class ControlSaveLoadCharacterSet implements ActionListener, Observer {
     oos.close();
   }
   
-  public void loadCharacterSet(String fromFile) throws FileNotFoundException, IOException, ClassNotFoundException
+  public void loadCharacterSet(String fromFile) throws FileNotFoundException, IOException
   {
-    FileInputStream fis = new FileInputStream(new File(fromFile));
-    BufferedInputStream buffin = new BufferedInputStream(fis);
-    ObjectInputStream ois = new ObjectInputStream(buffin);
-    CharacterSet charSet = (CharacterSet) ois.readObject();
-    ois.close();
-    
-    this.characterSetController.setCurrentCharacterSet(charSet);
+    try {
+      FileInputStream fis = new FileInputStream(new File(fromFile));
+      BufferedInputStream buffin = new BufferedInputStream(fis);
+      ObjectInputStream ois = new ObjectInputStream(buffin);
+      CharacterSet charSet = (CharacterSet) ois.readObject();
+      ois.close();
+      
+      this.characterSetController.setCurrentCharacterSet(charSet);
+    } catch (ClassNotFoundException cnfe)
+    {
+      //todo: show error message
+      RSLogger.getLogger().log(Level.SEVERE, null, cnfe);
+    }
   }
 
   @Override
