@@ -6,11 +6,13 @@
 
 package charmaker2.control;
 
+import charmaker2.control.models.FontSettings;
 import charmaker2.view.CharMakerWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -21,16 +23,22 @@ import javax.swing.JTextField;
  */
 public class ControlFontSettings implements ActionListener
 {
-  private ArrayList<JRadioButton> buttons;
+  private final ArrayList<JRadioButton> buttons;
   
-  private JCheckBox checkBoxMirrorHorizontally;
+  private final JCheckBox checkBoxMirrorHorizontally;
   private final JCheckBox checkBoxMirrorVertically;
+  private final JCheckBox checkBoxAlignTop;
+  
+  private final JComboBox comboBoxDataTypes;
+  private final ComboBoxDataTypes dataTypes;
   
   private final JLabel labelFontName;
   private final JLabel labelDataType;
   
   private int activeButton;
-  private JTextField fontName;
+  private final JTextField fontName;
+  
+  private FontSettings fontSettings;
   
   public ControlFontSettings(CharMakerWindow view)
   {
@@ -43,9 +51,15 @@ public class ControlFontSettings implements ActionListener
     
     this.checkBoxMirrorHorizontally = view.getCheckBoxMirrorY();
     this.checkBoxMirrorVertically = view.getCheckBoxMirrorX();
+    this.checkBoxAlignTop = null; //TODO
     
     this.labelFontName = view.getLabelFontName();
     this.labelDataType = view.getLabelDatatype();
+    
+    this.comboBoxDataTypes = view.getComboBoxDatatype();
+    this.dataTypes = new ComboBoxDataTypes();
+    this.comboBoxDataTypes.setModel(dataTypes);
+    dataTypes.updateList();
 
     for (int i=0; i<4; i+=1)
     {
@@ -53,6 +67,8 @@ public class ControlFontSettings implements ActionListener
     }
     buttons.get(0).setSelected(true);
     this.fontName = view.getTextFieldFontName();
+    
+    this.fontSettings = new FontSettings();
   }
   
   public void setLabels()
@@ -67,8 +83,21 @@ public class ControlFontSettings implements ActionListener
     
     this.checkBoxMirrorHorizontally.setText("Mirror Horizontally");
     this.checkBoxMirrorVertically.setText(("Mirror Vertically"));
+    //this.checkBoxAlignTop.setText("Align at Top");
     
     this.fontName.setText("font");
+  }
+  
+  public FontSettings getFontSettings()
+  {
+    fontSettings.bits = this.dataTypes.getSelectedBitDepth();
+    fontSettings.dataType = this.dataTypes.getSelectedDatatypeName();
+    fontSettings.fontName = this.fontName.getText();
+    fontSettings.mirrorHorizontal = this.checkBoxMirrorHorizontally.isSelected();
+    fontSettings.mirrorVertical = this.checkBoxMirrorVertically.isSelected();
+    //fontSettings.alignAtTop = this.checkBoxAlignTop.isSelected();
+    fontSettings.rotation = this.getActiveButtonIndex();
+    return this.fontSettings;
   }
   
   public JRadioButton getActiveButton()

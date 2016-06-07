@@ -17,7 +17,7 @@ import javax.swing.JFileChooser;
  *
  * @author Richard
  */
-public class ControlFileIO extends Observable implements ActionListener {
+public class ControlFileIO extends Observable {
   
   private final JFileChooser fileChooser;
   private final CharMakerWindow view;
@@ -82,11 +82,6 @@ public class ControlFileIO extends Observable implements ActionListener {
     }
     this.setChanged();
     this.notifyObservers();
-  }
-
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
   
 }

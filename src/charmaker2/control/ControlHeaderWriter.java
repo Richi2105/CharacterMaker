@@ -6,6 +6,7 @@
 
 package charmaker2.control;
 
+import charmaker2.control.models.FontSettings;
 import charmaker2.core.HeaderWriter;
 import charmaker2.core.character.CharacterSet;
 import java.awt.event.ActionEvent;
@@ -23,37 +24,22 @@ import charmaker2.view.CharMakerWindow;
  *
  * @author Richard
  */
-public class ControlHeaderWriter implements ActionListener, Observer
+
+//TODO: rewrite
+public class ControlHeaderWriter implements Observer
 {
-  private CharMakerWindow view;
-  private HeaderWriter writer;
-  private ControlFontSettings fontSettings;
-  private ComboBoxDataTypes dataTypes;
+  private final ControlFileIO fileController;
+  
+
   
   private CharacterSet charaSet;
-  private File filePath;
+  private FontSettings settings;  
   
-  private ControlCharacterSet charaListController;
-  private ControlFileOperation fileController;
+  //private ControlFileOperation fileController;
   
-  public ControlHeaderWriter(CharMakerWindow view, ControlFontSettings fontSettings)
+  public ControlHeaderWriter(ControlFileIO fileController)
   {
-    this.view = view;
-    view.getButtonSave().addActionListener(this);
-    view.getComboBoxDatatype().removeAllItems();
-    
-    this.dataTypes = new ComboBoxDataTypes();
-    view.getComboBoxDatatype().setModel(dataTypes);
-    dataTypes.updateList();
-    
-/*    JRadioButton buttons[] = {view.getRadioButtonRotate0(),
-                              view.getRadioButtonRotate90(),
-                              view.getRadioButtonRotate180(),
-                              view.getRadioButtonRotate270()};
-    
-    radioButtonController = new ControlFontSettings(buttons, 4);
-*/
-    this.fontSettings = fontSettings;
+    this.fileController = fileController;
   }
   
   public ControlHeaderWriter setObservable(Observable o)
@@ -61,7 +47,43 @@ public class ControlHeaderWriter implements ActionListener, Observer
     o.addObserver(this);
     return this;
   }
-
+  
+  private void writeHeader()
+  {
+    HeaderWriter writer = new HeaderWriter(settings.rotation, settings.bits, settings.mirrorVertical);
+    
+    String folderPath = this.fileController.getPath();
+    
+    try {
+      writer.writeHeader(charaSet, new File(folderPath));
+    }    
+    catch (FileNotFoundException fnfe)
+    {
+      RSLogger.getLogger().log(Level.WARNING, "File not found", fnfe);
+    }
+    catch (IOException ioex)
+    {
+      RSLogger.getLogger().log(Level.SEVERE, "File not writeable", ioex);
+    }
+  }
+  
+  public void writeOut(CharacterSet charset, FontSettings settings, String file)
+  {    
+    HeaderWriter writer = new HeaderWriter(settings.rotation, settings.bits, settings.mirrorVertical);
+     
+    try {
+      writer.writeHeader(charaSet, new File(file));
+    }    
+    catch (FileNotFoundException fnfe)
+    {
+      RSLogger.getLogger().log(Level.WARNING, "File not found", fnfe);
+    }
+    catch (IOException ioex)
+    {
+      RSLogger.getLogger().log(Level.SEVERE, "File not writeable", ioex);
+    }
+  }
+/*
   @Override
   public void actionPerformed(ActionEvent e)
   {
@@ -96,18 +118,11 @@ public class ControlHeaderWriter implements ActionListener, Observer
     
     
   }
-
+*/
   @Override
   public void update(Observable o, Object arg)
   {
-    if (o.getClass().equals(ControlFileOperation.class))
-    {
-      filePath = ((ControlFileOperation)o).getFolderPath();
-    }
-    else if (o.getClass().equals(ControlCharacterSet.class))
-    {
-      charaSet = ((ControlCharacterSet)o).getCurrentCharacterSet();
-    }
-      
+    this.fileController.deleteObserver(this);
+    this.writeHeader();      
   }
 }

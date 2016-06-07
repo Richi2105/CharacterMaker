@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Observable;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 /**
@@ -22,6 +23,10 @@ import javax.swing.JFileChooser;
 public class ControlFileOperation extends Observable implements ActionListener
 {
   private CharMakerWindow view;
+  
+ // private final JButton buttonSave;
+ // private final JButton buttonNew;
+  
   private ControlCharacterSet characterListController;
   private File folderPath;
   private SavedSettings settings;
