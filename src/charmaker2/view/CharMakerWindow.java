@@ -77,6 +77,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     checkBoxMirrorX = new javax.swing.JCheckBox();
     checkBoxMirrorY = new javax.swing.JCheckBox();
     checkBoxAlignAtTop = new javax.swing.JCheckBox();
+    panelRotationPreview = new javax.swing.JPanel();
     panelCharacters = new javax.swing.JPanel();
     jPanel2 = new javax.swing.JPanel();
     buttonAddChar = new javax.swing.JButton();
@@ -217,8 +218,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     gridBagConstraints.gridy = 3;
     dialogAddCharacter.getContentPane().add(jPanel9, gridBagConstraints);
 
-    dialogNewCharSet.setMinimumSize(new java.awt.Dimension(250, 150));
-    dialogNewCharSet.setPreferredSize(new java.awt.Dimension(250, 150));
+    dialogNewCharSet.setMinimumSize(new java.awt.Dimension(300, 150));
     dialogNewCharSet.getContentPane().setLayout(new javax.swing.BoxLayout(dialogNewCharSet.getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
 
     jPanel7.setLayout(new java.awt.GridBagLayout());
@@ -372,7 +372,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     checkBoxMirrorX.setText("jCheckBox1");
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 3;
+    gridBagConstraints.gridy = 2;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(checkBoxMirrorX, gridBagConstraints);
@@ -380,7 +380,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
     checkBoxMirrorY.setText("jCheckBox2");
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 4;
+    gridBagConstraints.gridy = 3;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(checkBoxMirrorY, gridBagConstraints);
@@ -388,9 +388,13 @@ public class CharMakerWindow extends javax.swing.JFrame {
     checkBoxAlignAtTop.setText("jCheckBox1");
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 5;
+    gridBagConstraints.gridy = 4;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(checkBoxAlignAtTop, gridBagConstraints);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 1;
+    gridBagConstraints.gridy = 5;
+    panelHeaderControl.add(panelRotationPreview, gridBagConstraints);
 
     tabbedPaneFont.addTab("tab2", panelHeaderControl);
 
@@ -645,6 +649,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
   private javax.swing.JPanel panelInput;
   private javax.swing.JPanel panelPreview;
   private javax.swing.JPanel panelPreviewFont;
+  private javax.swing.JPanel panelRotationPreview;
   private javax.swing.JRadioButton radioButton0;
   private javax.swing.JRadioButton radioButton180;
   private javax.swing.JRadioButton radioButton270;
@@ -1055,5 +1060,19 @@ public class CharMakerWindow extends javax.swing.JFrame {
    */
   public javax.swing.JDialog getDialogNewCharSet() {
     return dialogNewCharSet;
+  }
+
+  /**
+   * @return the checkBoxAlignAtTop
+   */
+  public javax.swing.JCheckBox getCheckBoxAlignAtTop() {
+    return checkBoxAlignAtTop;
+  }
+
+  /**
+   * @return the panelRotationPreview
+   */
+  public javax.swing.JPanel getPanelRotationPreview() {
+    return panelRotationPreview;
   }
 }

@@ -13,7 +13,7 @@ import charmaker2.control.ControlFileOperation;
 import charmaker2.control.ControlFontSettings;
 import charmaker2.control.ControlGrid;
 import charmaker2.control.ControlHeaderWriter;
-import charmaker2.control.ControlNewCharset;
+import charmaker2.control.ControlNewOpenWriteCharset;
 import charmaker2.control.ControlPreview;
 import charmaker2.control.ControlSaveLoadCharacterSet;
 import charmaker2.control.ControlSetCharacter;
@@ -47,10 +47,10 @@ public class CharMaker {
       //fileController.addCharacterListController(charListController);
       ControlFontSettings fontController = new ControlFontSettings(window);
       fontController.setLabels();
-      ControlHeaderWriter outputController = new ControlHeaderWriter(window, fontController);
       //outputController.setObservable(charListController).setObservable(fileController);
       
-      ControlNewCharset charsetController = new ControlNewCharset(window, charListController, gridController);
+      ControlNewOpenWriteCharset charsetController = new ControlNewOpenWriteCharset(window, charListController, gridController, fileIO, fontController);
+      charsetController.setLabels();
       
       ControlPreview preview = new ControlPreview(window, charListController);
       preview.setLabels();

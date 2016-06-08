@@ -80,12 +80,26 @@ public class CharacterSet extends AbstractListModel<String> implements Serializa
     RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
   }
   
+  public void addCharacter(char character, String description) throws Exception
+  {
+    if (this.fontWidth != 0)
+    {
+      this.addCharacter(character, description, new DataGrid(this.fontWidth, this.fontHeight));
+    }
+    else
+    {
+      throw new Exception("Invalid Character: no width specified, width is variable");
+    }
+  }
+  
+  public void addCharacter(char character, String description, int width)
+  {
+    this.addCharacter(character, description, new DataGrid(width, this.fontHeight));
+  }
+  
   public void addCharacter(char character, DataGrid grid)
   {
-    characters.add(new CharacterDescriptor(grid, Char2Description.getDescription(character), character));
-    this.fireContentsChanged(this, this.characters.size()-1, this.characters.size());
-    RSLogger.getLogger().log(Level.INFO, String.format("new Character: %c", character));
-
+    this.addCharacter(character, Char2Description.getDescription(character), grid);
   }
   
   public void addCharacter(char character, String description, DataGrid grid)

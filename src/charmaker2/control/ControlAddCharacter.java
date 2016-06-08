@@ -138,31 +138,32 @@ public class ControlAddCharacter extends DialogShowBaseClass implements ActionLi
     this.spinnerHex.addChangeListener(this);
   }
   
-  public void showDialog(CharacterDescriptor desc, Point p, boolean varColumnWidth)
+  public void showDialog(CharacterDescriptor desc, Point p, boolean varColumnWidth, int width)
   {
     this.spinnerColumns.setEnabled(varColumnWidth);
+    this.spinnerModelColumns.setDecimalValue(width);
     if (desc != null)
     {
       this.setCharacterChar(desc.getCharacter());
       this.textFieldDescription.setText(desc.getDescriptor());
       this.spinnerModelColumns.setDecimalValue(desc.getWidth());
-    }    
+    }
     this.showDialog(p);
   }
   
-  public void showDialog(Point p, boolean varColumnWidth)
+  public void showDialog(Point p, boolean varColumnWidth, int width)
   {
-    this.showDialog(null, p, varColumnWidth);
+    this.showDialog(null, p, varColumnWidth, width);
   }
 
-  public void showDialog(CharacterDescriptor desc, boolean varColumnWidth)
+  public void showDialog(CharacterDescriptor desc, boolean varColumnWidth, int width)
   {
-    this.showDialog(desc, null, varColumnWidth);
+    this.showDialog(desc, null, varColumnWidth, width);
   }
   
-  public void showDialog(boolean varColumnWidth)
+  public void showDialog(boolean varColumnWidth, int width)
   {
-    this.showDialog(null, null, varColumnWidth);
+    this.showDialog(null, null, varColumnWidth, width);
   }
 
   @Override

@@ -7,13 +7,20 @@
 package charmaker2.control;
 
 import charmaker2.control.models.FontSettings;
+import charmaker2.util.RSLogger;
 import charmaker2.view.CharMakerWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import javax.imageio.ImageIO;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
@@ -24,6 +31,9 @@ import javax.swing.JTextField;
 public class ControlFontSettings implements ActionListener
 {
   private final ArrayList<JRadioButton> buttons;
+  
+  private final JPanel panelRotationPreview;
+  private BufferedImage previewImage;
   
   private final JCheckBox checkBoxMirrorHorizontally;
   private final JCheckBox checkBoxMirrorVertically;
@@ -48,6 +58,13 @@ public class ControlFontSettings implements ActionListener
     this.buttons.add(view.getRadioButton90());
     this.buttons.add(view.getRadioButton180());
     this.buttons.add(view.getRadioButton270());
+    
+    this.panelRotationPreview = view.getPanelRotationPreview();
+    try {
+      this.previewImage = ImageIO.read(new File("./src/charmaker2/media/preview_FontSettings.png"));
+    } catch (IOException ex) {
+      RSLogger.getLogger().log(Level.SEVERE, null, ex);
+    }
     
     this.checkBoxMirrorHorizontally = view.getCheckBoxMirrorY();
     this.checkBoxMirrorVertically = view.getCheckBoxMirrorX();

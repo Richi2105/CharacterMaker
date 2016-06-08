@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Observer;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JTabbedPane;
@@ -149,7 +150,16 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
   
   public void addCharacter(char c, String description, int width)
   {
-    this.charSet.addCharacter(c, description, new DataGrid(width, this.charSet.getFontHeight()));
+    if (this.charSet.getFontWidth() == 0)
+      this.charSet.addCharacter(c, description, width);
+    else
+    {
+      try {
+        this.charSet.addCharacter(c, description);
+      } catch (Exception ex) {
+        RSLogger.getLogger().log(Level.SEVERE, null, ex);
+      }
+    }
     this.setChanged();
     this.notifyObservers();
   }
@@ -172,7 +182,9 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
     {
       this.mode = MODE_ADD;
       this.addCharacterController.addObserver(this);
-      this.addCharacterController.showDialog(this.buttonAdd.getLocationOnScreen(), this.grid.isVariableColumnNumber());
+      this.addCharacterController.showDialog(this.buttonAdd.getLocationOnScreen(),
+                                             this.grid.isVariableColumnNumber(),
+                                             this.charSet.getFontWidth());
     }
     else if (e.getSource() == this.buttonRemove)
     {
@@ -211,7 +223,10 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
         this.mode = MODE_EDIT;
         this.addCharacterController.addObserver(this);
         CharacterDescriptor selection = this.charSet.getCharacterAt(this.currentSelection);
-        this.addCharacterController.showDialog(selection, this.buttonEdit.getLocationOnScreen(), this.grid.isVariableColumnNumber());
+        this.addCharacterController.showDialog(selection,
+                                               this.buttonEdit.getLocationOnScreen(),
+                                               this.grid.isVariableColumnNumber(),
+                                               this.charSet.getFontWidth());
       }
     }
   }

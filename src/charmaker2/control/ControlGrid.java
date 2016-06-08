@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import charmaker2.view.CharMakerWindow;
 import charmaker2.view.GridPane;
+import java.awt.Point;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -85,6 +86,20 @@ public class ControlGrid extends DialogShowBaseClass implements ActionListener, 
     this.labelRows = view.getLabelRows();
   }
   
+  @Override
+  public void showDialog()
+  {
+    this.setDimensions(this.gridXNumber, this.gridYNumber);
+    super.showDialog();
+  }
+  
+  @Override
+  public void showDialog(Point p)
+  {
+    this.setDimensions(this.gridXNumber, this.gridYNumber);
+    super.showDialog(p);
+  }
+  
   public void setLabels()
   {
     this.labelColumns.setText("Columns");
@@ -145,9 +160,9 @@ public class ControlGrid extends DialogShowBaseClass implements ActionListener, 
       if (varColumnNumber)
         this.gridXNumber = 0;
       else
-        this.gridXNumber = this.spinnerModelRows.getDecimalValue();
+        this.gridXNumber = this.spinnerModelColumns.getDecimalValue();
       
-      this.gridYNumber = this.spinnerModelColumns.getDecimalValue();
+      this.gridYNumber = this.spinnerModelRows.getDecimalValue();
       grid.setGrid(gridXNumber, gridYNumber);
       this.grid.repaint();
       this.closeDialog(this.DIALOG_OK);

@@ -26,53 +26,21 @@ import charmaker2.view.CharMakerWindow;
  */
 
 //TODO: rewrite
-public class ControlHeaderWriter implements Observer
+public class ControlHeaderWriter
 {
-  private final ControlFileIO fileController;
-  
-
-  
-  private CharacterSet charaSet;
-  private FontSettings settings;  
-  
+ 
   //private ControlFileOperation fileController;
   
-  public ControlHeaderWriter(ControlFileIO fileController)
+  public ControlHeaderWriter()
   {
-    this.fileController = fileController;
-  }
-  
-  public ControlHeaderWriter setObservable(Observable o)
-  {
-    o.addObserver(this);
-    return this;
-  }
-  
-  private void writeHeader()
-  {
-    HeaderWriter writer = new HeaderWriter(settings.rotation, settings.bits, settings.mirrorVertical);
-    
-    String folderPath = this.fileController.getPath();
-    
-    try {
-      writer.writeHeader(charaSet, new File(folderPath));
-    }    
-    catch (FileNotFoundException fnfe)
-    {
-      RSLogger.getLogger().log(Level.WARNING, "File not found", fnfe);
-    }
-    catch (IOException ioex)
-    {
-      RSLogger.getLogger().log(Level.SEVERE, "File not writeable", ioex);
-    }
   }
   
   public void writeOut(CharacterSet charset, FontSettings settings, String file)
   {    
-    HeaderWriter writer = new HeaderWriter(settings.rotation, settings.bits, settings.mirrorVertical);
+    HeaderWriter writer = new HeaderWriter(settings.rotation, settings.bits, settings.dataType, settings.mirrorHorizontal, settings.mirrorVertical);
      
     try {
-      writer.writeHeader(charaSet, new File(file));
+      writer.writeHeader(charset, new File(file));
     }    
     catch (FileNotFoundException fnfe)
     {
@@ -119,10 +87,4 @@ public class ControlHeaderWriter implements Observer
     
   }
 */
-  @Override
-  public void update(Observable o, Object arg)
-  {
-    this.fileController.deleteObserver(this);
-    this.writeHeader();      
-  }
 }

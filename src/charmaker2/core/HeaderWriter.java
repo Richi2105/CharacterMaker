@@ -27,6 +27,11 @@ public class HeaderWriter
   public final static int ROTATION_180 = 2;
   public final static int ROTATION_270 = 3;
   
+  public final static int MIRROR_NONE = 0;
+  public final static int MIRROR_HORIZONTAL = 1;
+  public final static int MIRROR_VERTICAL = 2;
+  public final static int MIRROR_HORIZONTAL_VERTICAL = 3;
+  
   public final static int DATATYPE_8Bit = 8;
   public final static int DATATYPE_16Bit = 16;
   public final static int DATATYPE_32Bit = 32;
@@ -54,16 +59,18 @@ public class HeaderWriter
   
   private final int rotation;
   private final int type;
-  private final boolean mirror;
+  private final boolean mirrorHorizontal;
+  private final boolean mirrorVertical;
   
   private final String datatype_name;
   private final String output_hex;  
   
-  public HeaderWriter(int rotation, int type, boolean mirror)
+  public HeaderWriter(int rotation, int type, boolean mirrorHorizontal, boolean mirrorVertical)
   {
     this.rotation = rotation;
     this.type = type;
-    this.mirror = mirror;
+    this.mirrorHorizontal = mirrorHorizontal;
+    this.mirrorVertical = mirrorVertical;
     
     switch (type) {
       case DATATYPE_8Bit: this.datatype_name = this.DATATYPE_NAME_UINT_8; this.output_hex = this.OUTPUT_HEX_8BIT; break;
@@ -75,11 +82,12 @@ public class HeaderWriter
 
   }
   
-    public HeaderWriter(int rotation, int type, String typename, boolean mirror)
+  public HeaderWriter(int rotation, int type, String typename, boolean mirrorHorizontal, boolean mirrorVertical)
   {
     this.rotation = rotation;
     this.type = type;
-    this.mirror = mirror;
+    this.mirrorHorizontal = mirrorHorizontal;
+    this.mirrorVertical = mirrorVertical;
     
     this.datatype_name = typename;    
     switch (type) {
@@ -98,7 +106,7 @@ public class HeaderWriter
     //int x = c.getGrid().getXSize();
     GridIterator it;
     try {
-      it = new GridIterator(c.getGrid(), rotation, mirror);
+      it = new GridIterator(c.getGrid(), rotation, mirrorHorizontal, mirrorVertical);
       for (it.x=it.xBegin; it.conditionX(); it.x+=it.xDirection)
       {
         //int y = c.getGrid().getYSize();
@@ -134,9 +142,9 @@ public class HeaderWriter
   {
     String output = COMMENT_SIGNLELINE + "\t";
     try {
-      int rotationComment = (this.rotation + 1) % 4;
+      int rotationComment = (this.rotation + 3) % 4;
       
-      GridIterator it = new GridIterator(c.getGrid(), rotationComment, !mirror);
+      GridIterator it = new GridIterator(c.getGrid(), rotationComment, !mirrorVertical, mirrorHorizontal);
       for (it.x=it.xBegin; it.conditionX(); it.x+=it.xDirection)
       {
         for (it.y=it.yBegin; it.conditionY(); it.y+=it.yDirection)
@@ -171,15 +179,44 @@ public class HeaderWriter
     return output;
   }
   
-  private String addToArray(CharacterDescriptor c)
+  private String closeFontArray()
   {
-    String output = String.format("character_%s,\n", c.getDescriptor());
+    String output = "};\n";
     return output;
   }
   
-  private String closeFontArray()
+  private String addToFontArray(CharacterDescriptor c, boolean lastone)
   {
-    String output = "}\n";
+    String output = String.format("character_%s", c.getDescriptor());
+    if (lastone)
+      output = output.concat("\n");
+    else
+      output = output.concat(",\n");
+    return output;
+  }
+  
+  private String declareWidthArray(CharacterSet charaSet)
+  {
+    String output = "int";
+    output = output.concat(String.format("* %s_width[%d] = {\n",
+            charaSet.getFontName().replace(' ', '_'),
+            charaSet.getSize()));
+    return output;
+  }
+  
+  private String closeWidthArray()
+  {
+    String output = "};\n";
+    return output;
+  }
+  
+  private String addToWidthArray(CharacterDescriptor c, boolean lastone)
+  {
+    String output = String.format("%d", c.getWidth());
+    if (lastone)
+      output = output.concat("\n");
+    else
+      output = output.concat(",\n");
     return output;
   }
   
@@ -210,7 +247,8 @@ public class HeaderWriter
                      + COMMENT_FURTHER + "Character width (0 is variable):" + String.format("%d", charaSet.getFontWidth()) + "\n"
                      + COMMENT_FURTHER + "\n"
                      + COMMENT_FURTHER + "Rotation: " + String.format("%d", this.rotation*90)+ "\n"
-                     + COMMENT_FURTHER + "Mirrored: " + Boolean.toString(mirror) + "\n"
+                     + COMMENT_FURTHER + "Mirrored horizontally: " + Boolean.toString(mirrorHorizontal) + "\n"
+                     + COMMENT_FURTHER + "Mirrored vertically: " + Boolean.toString(mirrorVertical) + "\n"
                      + COMMENT_END + "\n";
     
     fontHeader.writeBytes(comment);
@@ -224,11 +262,24 @@ public class HeaderWriter
     }
     
     fontHeader.writeBytes(this.declareFontArray(charaSet));
-    for (CharacterDescriptor c : charaSet.getCharacters())
+    for (int i=0; i<charaSet.getSize()-1; i+=1)
     {
-      fontHeader.writeBytes(this.addToArray(c));
+      fontHeader.writeBytes(this.addToFontArray(charaSet.getCharacterAt(i), false));
     }
+    fontHeader.writeBytes(this.addToFontArray(charaSet.getCharacterAt(charaSet.getSize()-1), true));
     fontHeader.writeBytes(this.closeFontArray());
+    
+    if (charaSet.getFontWidth() == 0)
+    {
+      fontHeader.writeBytes(this.declareWidthArray(charaSet));
+      
+      for (int i=0; i<charaSet.getSize()-1; i+=1)
+      {
+        fontHeader.writeBytes(this.addToWidthArray(charaSet.getCharacterAt(i), false));
+      }
+      fontHeader.writeBytes(this.addToWidthArray(charaSet.getCharacterAt(charaSet.getSize()-1), true));
+      fontHeader.writeBytes(this.closeWidthArray());
+    }
     
     fontHeader.close();
   }

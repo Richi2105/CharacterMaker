@@ -20,7 +20,7 @@ import javax.swing.JButton;
  *
  * @author richard
  */
-public class ControlNewCharset implements ActionListener, Observer
+public class ControlNewOpenWriteCharset implements ActionListener, Observer
 {
     
     private CharMakerWindow view;
@@ -40,7 +40,7 @@ public class ControlNewCharset implements ActionListener, Observer
     private final ControlFontSettings fontSettings;
     private final ControlFileIO fileController;
     
-    public ControlNewCharset(CharMakerWindow view,
+    public ControlNewOpenWriteCharset(CharMakerWindow view,
                              ControlCharacterSet list,
                              ControlGrid gridController,
                              ControlFileIO fileController,
@@ -56,7 +56,7 @@ public class ControlNewCharset implements ActionListener, Observer
         this.buttonOpen.addActionListener(this);
         this.buttonWrite.addActionListener(this);
         
-        this.headerWriter = new ControlHeaderWriter(fileController);
+        this.headerWriter = new ControlHeaderWriter();
         
         this.gridController = gridController;
         this.fileController = fileController;
@@ -124,7 +124,7 @@ public class ControlNewCharset implements ActionListener, Observer
       case OPERATION_SAVE: {
         this.headerWriter.writeOut(this.list.getCurrentCharacterSet(),
                                    this.fontSettings.getFontSettings(),
-                                   this.fileController.getFile());
+                                   this.fileController.getPath());
       } break;
       default: break;
     }
