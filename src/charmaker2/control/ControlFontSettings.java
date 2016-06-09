@@ -6,18 +6,16 @@
 
 package charmaker2.control;
 
+import charmaker2.CharMaker;
 import charmaker2.control.models.FontSettings;
 import charmaker2.util.RSLogger;
 import charmaker2.view.CharMakerWindow;
 import charmaker2.view.PicturePane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import javax.imageio.ImageIO;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -34,7 +32,6 @@ public class ControlFontSettings implements ActionListener
   private final ArrayList<JRadioButton> buttons;
   
   private final JPanel panelRotationPreview;
-  private BufferedImage previewImage;
   private PicturePane rotationPreview;
   
   private final JCheckBox checkBoxMirrorHorizontally;
@@ -63,7 +60,7 @@ public class ControlFontSettings implements ActionListener
     
     this.panelRotationPreview = view.getPanelRotationPreview();
     try {
-      this.rotationPreview = new PicturePane("./src/charmaker2/media/preview_FontSettings.png");
+      this.rotationPreview = new PicturePane(CharMaker.class.getResource("media/preview_FontSettings.png"));
     } catch (IOException ex) {
       RSLogger.getLogger().log(Level.SEVERE, null, ex);
     }

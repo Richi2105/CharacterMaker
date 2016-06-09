@@ -6,7 +6,7 @@
 
 package charmaker2.control;
 
-import charmaker2.View.subsystem.VarBitdepthID;
+import charmaker2.control.subsystem.VarBitdepthID;
 import java.util.ArrayList;
 import javax.swing.ComboBoxModel;
 import javax.swing.event.ListDataEvent;

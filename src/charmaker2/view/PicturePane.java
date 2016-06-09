@@ -13,6 +13,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -25,9 +26,9 @@ public class PicturePane extends JPanel {
   private final BufferedImage picture;
   private FontSettings settings;
   
-  public PicturePane(String pictureFile) throws IOException
+  public PicturePane(URL pictureFile) throws IOException
   {
-    this.picture = ImageIO.read(new File(pictureFile));    
+    this.picture = ImageIO.read(pictureFile);    
   }
   
   private void transform(Graphics2D g2)

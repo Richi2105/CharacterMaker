@@ -3,20 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package charmaker2.start;
 
-import charmaker2.util.RSLogger;
-import charmaker2.util.SavedSettings;
+package charmaker2;
+
 import charmaker2.control.ControlCharacterSet;
 import charmaker2.control.ControlFileIO;
-import charmaker2.control.ControlFileOperation;
 import charmaker2.control.ControlFontSettings;
 import charmaker2.control.ControlGrid;
-import charmaker2.control.ControlHeaderWriter;
 import charmaker2.control.ControlNewOpenWriteCharset;
 import charmaker2.control.ControlPreview;
 import charmaker2.control.ControlSaveLoadCharacterSet;
-import charmaker2.control.ControlSetCharacter;
 import charmaker2.util.RSLogger;
 import charmaker2.util.SavedSettings;
 import charmaker2.view.CharMakerWindow;
