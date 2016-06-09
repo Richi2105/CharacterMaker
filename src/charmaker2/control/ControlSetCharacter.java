@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import charmaker2.util.RSLogger;
 import charmaker2.view.CharMakerWindow;
 import charmaker2.view.GridPane;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,8 +37,12 @@ public class ControlSetCharacter implements ActionListener
   @Override
   public void actionPerformed(ActionEvent e)
   {
-    CharacterDescriptor charDesc = listController.getSelectedCharacterDescriptor();
-    RSLogger.getLogger().log(Level.INFO, "selected character: " + charDesc.getDescriptor());
-    charDesc.setGrid(grid.getGrid());
+    try {
+      CharacterDescriptor charDesc = listController.getSelectedCharacterDescriptor();
+      RSLogger.getLogger().log(Level.INFO, "selected character: " + charDesc.getDescriptor());
+      charDesc.setGrid(grid.getGrid());
+    } catch (Exception ex) {
+      RSLogger.getLogger().log(Level.WARNING, null, ex);
+    }
   }
 }

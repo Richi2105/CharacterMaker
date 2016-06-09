@@ -59,7 +59,7 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
     this.mode = 0;
     
     this.grid = grid;
-    this.charSet = new CharacterSet(0, 0, "");
+    this.charSet = new CharacterSet(8, 8, "");
     this.characterList = view.getListChars();
     
     this.buttonAdd = view.getButtonAddChar();
@@ -126,7 +126,7 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
     return charSet;
   }
   
-  public CharacterDescriptor getSelectedCharacterDescriptor()
+  public CharacterDescriptor getSelectedCharacterDescriptor() throws Exception
   {
     if (this.currentSelection != -1)
       return this.charSet.getCharacterAt(currentSelection);
@@ -170,9 +170,13 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
     this.currentSelection = this.characterList.getSelectedIndex();
     if (this.currentSelection >= 0)
     {
-      grid.setDimensions(charSet.getCharacterAt(this.currentSelection).getGrid().getXSize(),
-                         charSet.getCharacterAt(this.currentSelection).getGrid().getYSize());
-      grid.getGridPane().setGrid(charSet.getCharacterAt(this.currentSelection).getGrid());
+      try {
+        grid.setDimensions(charSet.getCharacterAt(this.currentSelection).getGrid().getXSize(),
+                charSet.getCharacterAt(this.currentSelection).getGrid().getYSize());
+        grid.getGridPane().setGrid(charSet.getCharacterAt(this.currentSelection).getGrid());
+      } catch (Exception ex) {
+        RSLogger.getLogger().log(Level.SEVERE, null, ex);
+      }
     }
   }
 
@@ -204,29 +208,41 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
     {
       if (this.currentSelection != -1 && this.previewController != null)
       {
-        CharacterDescriptor selection = this.charSet.getCharacterAt(this.currentSelection);
-        this.previewController.addCharacter(selection.getGrid());
+        try {
+          CharacterDescriptor selection = this.charSet.getCharacterAt(this.currentSelection);
+          this.previewController.addCharacter(selection.getGrid());
+        } catch (Exception ex) {
+          RSLogger.getLogger().log(Level.SEVERE, null, ex);
+        }
       }
     }
     else if (e.getSource() == this.buttonSet)
     {
       if (this.currentSelection != -1)
       {
-        CharacterDescriptor selection = this.charSet.getCharacterAt(this.currentSelection);
-        selection.setGrid(grid.getGridPane().getGrid());
+        try {
+          CharacterDescriptor selection = this.charSet.getCharacterAt(this.currentSelection);
+          selection.setGrid(grid.getGridPane().getGrid());
+        } catch (Exception ex) {
+          RSLogger.getLogger().log(Level.SEVERE, null, ex);
+        }
       }
     }
     else if (e.getSource() == this.buttonEdit)
     {
       if (this.currentSelection != -1)
       {
-        this.mode = MODE_EDIT;
-        this.addCharacterController.addObserver(this);
-        CharacterDescriptor selection = this.charSet.getCharacterAt(this.currentSelection);
-        this.addCharacterController.showDialog(selection,
-                                               this.buttonEdit.getLocationOnScreen(),
-                                               this.grid.isVariableColumnNumber(),
-                                               this.charSet.getFontWidth());
+        try {
+          this.mode = MODE_EDIT;
+          this.addCharacterController.addObserver(this);
+          CharacterDescriptor selection = this.charSet.getCharacterAt(this.currentSelection);
+          this.addCharacterController.showDialog(selection,
+                  this.buttonEdit.getLocationOnScreen(),
+                  this.grid.isVariableColumnNumber(),
+                  this.charSet.getFontWidth());
+        } catch (Exception ex) {
+          RSLogger.getLogger().log(Level.SEVERE, null, ex);
+        }
       }
     }
   }
@@ -247,6 +263,7 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
           break;
         }
         case MODE_EDIT: {
+        try {
           this.getSelectedCharacterDescriptor().setCharacter(d.character);
           this.getSelectedCharacterDescriptor().setDescription(d.description);
           this.getSelectedCharacterDescriptor().setWidth(d.width);
@@ -255,6 +272,9 @@ public class ControlCharacterSet extends Observable implements ListSelectionList
           this.characterList.ensureIndexIsVisible(this.currentSelection);
           this.valueChanged(null);
           break;
+        } catch (Exception ex) {
+          RSLogger.getLogger().log(Level.SEVERE, null, ex);
+        }
         }
         default: break;
       }

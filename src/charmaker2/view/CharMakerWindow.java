@@ -53,6 +53,9 @@ public class CharMakerWindow extends javax.swing.JFrame {
     jPanel12 = new javax.swing.JPanel();
     spinnerColumns = new javax.swing.JSpinner();
     checkBoxColumns = new javax.swing.JCheckBox();
+    jPanel10 = new javax.swing.JPanel();
+    dialogNewRadioButtonAllCharacter = new javax.swing.JRadioButton();
+    dialogNewRadioButtonNoCharacter = new javax.swing.JRadioButton();
     jPanel11 = new javax.swing.JPanel();
     dialogButtonGridOK = new javax.swing.JButton();
     dialogButtonGridCancel = new javax.swing.JButton();
@@ -114,7 +117,8 @@ public class CharMakerWindow extends javax.swing.JFrame {
     menuItemWriteHeader = new javax.swing.JMenuItem();
 
     dialogAddCharacter.setAlwaysOnTop(true);
-    dialogAddCharacter.setMinimumSize(new java.awt.Dimension(350, 150));
+    dialogAddCharacter.setMinimumSize(new java.awt.Dimension(380, 200));
+    dialogAddCharacter.setPreferredSize(new java.awt.Dimension(380, 200));
     dialogAddCharacter.getContentPane().setLayout(new java.awt.GridBagLayout());
 
     dialogLabelCharacter.setText("jLabel1");
@@ -218,7 +222,8 @@ public class CharMakerWindow extends javax.swing.JFrame {
     gridBagConstraints.gridy = 3;
     dialogAddCharacter.getContentPane().add(jPanel9, gridBagConstraints);
 
-    dialogNewCharSet.setMinimumSize(new java.awt.Dimension(300, 150));
+    dialogNewCharSet.setMinimumSize(new java.awt.Dimension(350, 200));
+    dialogNewCharSet.setPreferredSize(new java.awt.Dimension(350, 200));
     dialogNewCharSet.getContentPane().setLayout(new javax.swing.BoxLayout(dialogNewCharSet.getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
 
     jPanel7.setLayout(new java.awt.GridBagLayout());
@@ -276,6 +281,21 @@ public class CharMakerWindow extends javax.swing.JFrame {
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
     gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
     jPanel7.add(jPanel12, gridBagConstraints);
+
+    jPanel10.setLayout(new javax.swing.BoxLayout(jPanel10, javax.swing.BoxLayout.PAGE_AXIS));
+
+    dialogNewRadioButtonAllCharacter.setText("jRadioButton1");
+    jPanel10.add(dialogNewRadioButtonAllCharacter);
+
+    dialogNewRadioButtonNoCharacter.setText("jRadioButton2");
+    jPanel10.add(dialogNewRadioButtonNoCharacter);
+
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 2;
+    gridBagConstraints.gridwidth = 2;
+    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+    jPanel7.add(jPanel10, gridBagConstraints);
 
     dialogNewCharSet.getContentPane().add(jPanel7);
 
@@ -389,11 +409,16 @@ public class CharMakerWindow extends javax.swing.JFrame {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 4;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
     panelHeaderControl.add(checkBoxAlignAtTop, gridBagConstraints);
+
+    panelRotationPreview.setMinimumSize(new java.awt.Dimension(30, 30));
+    panelRotationPreview.setPreferredSize(new java.awt.Dimension(30, 30));
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 5;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     panelHeaderControl.add(panelRotationPreview, gridBagConstraints);
 
     tabbedPaneFont.addTab("tab2", panelHeaderControl);
@@ -543,13 +568,14 @@ public class CharMakerWindow extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+  
+//    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
+/*        try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -566,15 +592,15 @@ public class CharMakerWindow extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(CharMakerWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+*/
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+ /*       java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new CharMakerWindow().setVisible(true);
             }
         });
     }
-
+*/
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton buttonAddChar;
   private javax.swing.JButton buttonAddText;
@@ -604,6 +630,8 @@ public class CharMakerWindow extends javax.swing.JFrame {
   private javax.swing.JLabel dialogLabelColumns;
   private javax.swing.JLabel dialogLabelDescription;
   private javax.swing.JDialog dialogNewCharSet;
+  private javax.swing.JRadioButton dialogNewRadioButtonAllCharacter;
+  private javax.swing.JRadioButton dialogNewRadioButtonNoCharacter;
   private javax.swing.JSpinner dialogSpinnerCharacterHex;
   private javax.swing.JSpinner dialogSpinnerCharacterInt;
   private javax.swing.JSpinner dialogSpinnerColumns;
@@ -614,6 +642,7 @@ public class CharMakerWindow extends javax.swing.JFrame {
   private javax.swing.JMenu jMenu2;
   private javax.swing.JMenuBar jMenuBar1;
   private javax.swing.JPanel jPanel1;
+  private javax.swing.JPanel jPanel10;
   private javax.swing.JPanel jPanel11;
   private javax.swing.JPanel jPanel12;
   private javax.swing.JPanel jPanel2;
@@ -1074,5 +1103,19 @@ public class CharMakerWindow extends javax.swing.JFrame {
    */
   public javax.swing.JPanel getPanelRotationPreview() {
     return panelRotationPreview;
+  }
+
+  /**
+   * @return the dialogNewRadioButtonAllCharacter
+   */
+  public javax.swing.JRadioButton getDialogNewRadioButtonAllCharacter() {
+    return dialogNewRadioButtonAllCharacter;
+  }
+
+  /**
+   * @return the dialogNewRadioButtonNoCharacter
+   */
+  public javax.swing.JRadioButton getDialogNewRadioButtonNoCharacter() {
+    return dialogNewRadioButtonNoCharacter;
   }
 }

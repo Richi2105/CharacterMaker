@@ -142,9 +142,9 @@ public class HeaderWriter
   {
     String output = COMMENT_SIGNLELINE + "\t";
     try {
-      int rotationComment = (this.rotation + 3) % 4;
+      int rotationComment = (this.rotation + 1) % 4;
       
-      GridIterator it = new GridIterator(c.getGrid(), rotationComment, !mirrorVertical, mirrorHorizontal);
+      GridIterator it = new GridIterator(c.getGrid(), rotationComment, mirrorHorizontal, mirrorVertical);
       for (it.x=it.xBegin; it.conditionX(); it.x+=it.xDirection)
       {
         for (it.y=it.yBegin; it.conditionY(); it.y+=it.yDirection)
@@ -198,7 +198,7 @@ public class HeaderWriter
   private String declareWidthArray(CharacterSet charaSet)
   {
     String output = "int";
-    output = output.concat(String.format("* %s_width[%d] = {\n",
+    output = output.concat(String.format(" %s_width[%d] = {\n",
             charaSet.getFontName().replace(' ', '_'),
             charaSet.getSize()));
     return output;
@@ -229,14 +229,14 @@ public class HeaderWriter
     return output;
   }
   
-  public void writeHeader(CharacterSet charaSet, File filepath) throws FileNotFoundException, IOException
+  public void writeHeader(CharacterSet charaSet, File file) throws FileNotFoundException, IOException
   {
-    String fontName = charaSet.getFontName().replace(' ', '_');
-    String fileName = String.format("FONT_%s.h", fontName.toUpperCase());
+//    String fontName = charaSet.getFontName().replace(' ', '_');
+//    String fileName = String.format("FONT_%s.h", fontName.toUpperCase());
     DataOutputStream fontHeader = new DataOutputStream(
-              new FileOutputStream(filepath + File.separator + fileName));
+              new FileOutputStream(file));
     
-    System.out.println("New File: " + filepath + File.separator + fileName);
+    System.out.println("New File: " + file.toString());
     
     String comment = COMMENT_BEGIN + "\n"
                      + COMMENT_FURTHER + "@author: CharMaker by RSoft" + "\n"
@@ -261,24 +261,32 @@ public class HeaderWriter
       fontHeader.writeBytes(this.makeComment(c));
     }
     
-    fontHeader.writeBytes(this.declareFontArray(charaSet));
-    for (int i=0; i<charaSet.getSize()-1; i+=1)
-    {
-      fontHeader.writeBytes(this.addToFontArray(charaSet.getCharacterAt(i), false));
-    }
-    fontHeader.writeBytes(this.addToFontArray(charaSet.getCharacterAt(charaSet.getSize()-1), true));
-    fontHeader.writeBytes(this.closeFontArray());
+    fontHeader.writeByte('\n');
     
-    if (charaSet.getFontWidth() == 0)
-    {
-      fontHeader.writeBytes(this.declareWidthArray(charaSet));
-      
+    try {
+      fontHeader.writeBytes(this.declareFontArray(charaSet));
       for (int i=0; i<charaSet.getSize()-1; i+=1)
       {
-        fontHeader.writeBytes(this.addToWidthArray(charaSet.getCharacterAt(i), false));
+        fontHeader.writeBytes(this.addToFontArray(charaSet.getCharacterAt(i), false));
       }
-      fontHeader.writeBytes(this.addToWidthArray(charaSet.getCharacterAt(charaSet.getSize()-1), true));
-      fontHeader.writeBytes(this.closeWidthArray());
+      fontHeader.writeBytes(this.addToFontArray(charaSet.getCharacterAt(charaSet.getSize()-1), true));
+      fontHeader.writeBytes(this.closeFontArray());
+
+      if (charaSet.getFontWidth() == 0)
+      {
+        fontHeader.writeByte('\n');
+        fontHeader.writeBytes(this.declareWidthArray(charaSet));
+
+        for (int i=0; i<charaSet.getSize()-1; i+=1)
+        {
+          fontHeader.writeBytes(this.addToWidthArray(charaSet.getCharacterAt(i), false));
+        }
+        fontHeader.writeBytes(this.addToWidthArray(charaSet.getCharacterAt(charaSet.getSize()-1), true));
+        fontHeader.writeBytes(this.closeWidthArray());
+      }
+    }
+    catch (Exception ex) {
+      RSLogger.getLogger().log(Level.WARNING, null, ex);
     }
     
     fontHeader.close();

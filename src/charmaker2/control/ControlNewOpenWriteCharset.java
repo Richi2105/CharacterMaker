@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -88,11 +89,10 @@ public class ControlNewOpenWriteCharset implements ActionListener, Observer
       else if (e.getSource() == this.buttonWrite)
       {
         this.operation = OPERATION_SAVE;
+        this.fileController.setFile(String.format("FONT_%s.h", this.fontSettings.getFontName()));
         this.fileController.addObserver(this);
         this.fileController.showSaveDialog();
       }
-      
-
     }    
 
   @Override
@@ -105,10 +105,12 @@ public class ControlNewOpenWriteCharset implements ActionListener, Observer
           int y = this.gridController.getYDimension();
           String name = view.getTextFieldFontName().getText();
           CharacterSet set = new CharacterSet(x, y, name);
-
-          for (char c = ' '; c <= '~'; c += 1)
+          if (this.gridController.isCompleteCharacterSet())
           {
-              set.addCharacter(c, new DataGrid(x, y));
+            for (char c = ' '; c <= '~'; c += 1)
+            {
+                set.addCharacter(c, new DataGrid(x, y));
+            }
           }
           list.setCurrentCharacterSet(set);
         }
@@ -117,14 +119,21 @@ public class ControlNewOpenWriteCharset implements ActionListener, Observer
       
       case OPERATION_OPEN: {
         this.fileController.deleteObserver(this);
-        File f = new File(this.fileController.getFile());
-        BitmapReader.readBitmap(f, this.list);
+        if (this.fileController.getApproveOption() == JFileChooser.APPROVE_OPTION)
+        {
+          File f = new File(this.fileController.getFile());
+          BitmapReader.readBitmap(f, this.list);
+        }        
       } break;
       
       case OPERATION_SAVE: {
-        this.headerWriter.writeOut(this.list.getCurrentCharacterSet(),
+        this.fileController.deleteObserver(this);
+        if (this.fileController.getApproveOption() == JFileChooser.APPROVE_OPTION)
+        {
+          this.headerWriter.writeOut(this.list.getCurrentCharacterSet(),
                                    this.fontSettings.getFontSettings(),
-                                   this.fileController.getPath());
+                                   this.fileController.getFile());
+        }
       } break;
       default: break;
     }

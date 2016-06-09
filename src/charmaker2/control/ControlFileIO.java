@@ -52,6 +52,12 @@ public class ControlFileIO extends Observable {
     return this.approve;
   }
   
+  public void setFile(String file)
+  {
+    this.currentPath = this.currentPath.concat(File.separator).concat(file);
+    this.fileChooser.setCurrentDirectory(new File(this.currentPath));
+  }
+  
   public String getFile()
   {
     return this.currentFile;
@@ -67,7 +73,7 @@ public class ControlFileIO extends Observable {
   
   public void showSaveDialog()
   {
-    this.fileChooser.setCurrentDirectory(new File(this.currentPath));
+    //this.fileChooser.setCurrentDirectory(new File(this.currentPath));
     this.approve = this.fileChooser.showSaveDialog(view);
     
     this.handleFileDialog();

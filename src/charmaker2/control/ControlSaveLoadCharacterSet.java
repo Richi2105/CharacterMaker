@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 
 /**
@@ -106,24 +107,27 @@ public class ControlSaveLoadCharacterSet implements ActionListener, Observer {
 
   @Override
   public void update(Observable o, Object arg) {
-    try {
-      switch (this.operation) {
-        case OPERATION_LOAD: {
-          this.loadCharacterSet(this.fileIO.getFile());
-          this.operation = NOPERATION;
-          break;
+    if (this.fileIO.getApproveOption() == JFileChooser.APPROVE_OPTION)
+    { 
+      try {
+        switch (this.operation) {
+          case OPERATION_LOAD: {
+            this.loadCharacterSet(this.fileIO.getFile());
+            this.operation = NOPERATION;
+            break;
+          }
+          case OPERATION_SAVE: {
+            this.saveCharacterSet(this.fileIO.getFile());
+            this.operation = NOPERATION;
+            break;
+          }
+          default: break;
         }
-        case OPERATION_SAVE: {
-          this.saveCharacterSet(this.fileIO.getFile());
-          this.operation = NOPERATION;
-          break;
-        }
-        default: break;
       }
-    }
-    catch (Exception ex)
-    {
-      RSLogger.getLogger().log(Level.SEVERE, null, ex);
+      catch (Exception ex)
+      {
+        RSLogger.getLogger().log(Level.SEVERE, null, ex);
+      }
     }
   }
   

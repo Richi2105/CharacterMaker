@@ -23,7 +23,7 @@ public class CharacterSet extends AbstractListModel<String> implements Serializa
   private final ArrayList<CharacterDescriptor> characters;
   private final int fontHeight;
   private final int fontWidth;
-  private final String fontName;
+  private String fontName;
   
   public CharacterSet(int width, int height, String fontName)
   {
@@ -35,8 +35,10 @@ public class CharacterSet extends AbstractListModel<String> implements Serializa
     RSLogger.getLogger().log(Level.INFO, String.format("new Character set: %s, height: %d, width: %d", fontName, height, width));
   }
   
-  public CharacterDescriptor getCharacterAt(int index)
+  public CharacterDescriptor getCharacterAt(int index) throws Exception
   {
+    if (index > this.characters.size() || index < 0)
+      throw new Exception(String.format("Error: index %d is out of range", index));
     return characters.get(index);
   }
   
@@ -53,6 +55,11 @@ public class CharacterSet extends AbstractListModel<String> implements Serializa
   public String getFontName()
   {
     return fontName;
+  }
+  
+  public void setFontName(String name)
+  {
+    this.fontName = name;
   }
   
   public int getFontHeight()

@@ -111,7 +111,7 @@ public class ControlPreview implements ActionListener {
       {
         if (c=='\n')
         {
-          this.yPos += (this.charsetController.getCurrentCharacterSet().getCharacterAt(c).getGrid().getYSize() + 1) * (int)this.spinnerPixelSize.getValue();
+          this.yPos += (this.charsetController.getCurrentCharacterSet().getCharacter(c).getGrid().getYSize() + 1) * (int)this.spinnerPixelSize.getValue();
           this.xPos = this.offset;
         }
         else

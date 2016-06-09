@@ -9,6 +9,7 @@ package charmaker2.control;
 import charmaker2.control.models.FontSettings;
 import charmaker2.util.RSLogger;
 import charmaker2.view.CharMakerWindow;
+import charmaker2.view.PicturePane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -34,6 +35,7 @@ public class ControlFontSettings implements ActionListener
   
   private final JPanel panelRotationPreview;
   private BufferedImage previewImage;
+  private PicturePane rotationPreview;
   
   private final JCheckBox checkBoxMirrorHorizontally;
   private final JCheckBox checkBoxMirrorVertically;
@@ -61,14 +63,16 @@ public class ControlFontSettings implements ActionListener
     
     this.panelRotationPreview = view.getPanelRotationPreview();
     try {
-      this.previewImage = ImageIO.read(new File("./src/charmaker2/media/preview_FontSettings.png"));
+      this.rotationPreview = new PicturePane("./src/charmaker2/media/preview_FontSettings.png");
     } catch (IOException ex) {
       RSLogger.getLogger().log(Level.SEVERE, null, ex);
     }
     
+    this.panelRotationPreview.add(this.rotationPreview);
+    
     this.checkBoxMirrorHorizontally = view.getCheckBoxMirrorY();
     this.checkBoxMirrorVertically = view.getCheckBoxMirrorX();
-    this.checkBoxAlignTop = null; //TODO
+    this.checkBoxAlignTop = view.getCheckBoxAlignAtTop();
     
     this.labelFontName = view.getLabelFontName();
     this.labelDataType = view.getLabelDatatype();
@@ -100,7 +104,7 @@ public class ControlFontSettings implements ActionListener
     
     this.checkBoxMirrorHorizontally.setText("Mirror Horizontally");
     this.checkBoxMirrorVertically.setText(("Mirror Vertically"));
-    //this.checkBoxAlignTop.setText("Align at Top");
+    this.checkBoxAlignTop.setText("Align at Top");
     
     this.fontName.setText("font");
   }
@@ -112,9 +116,14 @@ public class ControlFontSettings implements ActionListener
     fontSettings.fontName = this.fontName.getText();
     fontSettings.mirrorHorizontal = this.checkBoxMirrorHorizontally.isSelected();
     fontSettings.mirrorVertical = this.checkBoxMirrorVertically.isSelected();
-    //fontSettings.alignAtTop = this.checkBoxAlignTop.isSelected();
+    fontSettings.alignAtTop = this.checkBoxAlignTop.isSelected();
     fontSettings.rotation = this.getActiveButtonIndex();
     return this.fontSettings;
+  }
+  
+  public String getFontName()
+  {
+    return this.fontName.getText();
   }
   
   public JRadioButton getActiveButton()
@@ -138,6 +147,9 @@ public class ControlFontSettings implements ActionListener
         b.setSelected(false);
       });
       buttons.get(activeButton).setSelected(true);
+      
+      this.rotationPreview.setPreview(this.getFontSettings());
+      this.rotationPreview.repaint();
     }
   }
 }

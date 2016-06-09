@@ -38,7 +38,7 @@ public class ControlHeaderWriter
   public void writeOut(CharacterSet charset, FontSettings settings, String file)
   {    
     HeaderWriter writer = new HeaderWriter(settings.rotation, settings.bits, settings.dataType, settings.mirrorHorizontal, settings.mirrorVertical);
-     
+    charset.setFontName(settings.fontName);
     try {
       writer.writeHeader(charset, new File(file));
     }    

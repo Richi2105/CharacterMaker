@@ -58,41 +58,41 @@ public class GridIterator {
     this.rotation = rotation;
     switch (rotation) {
       case HeaderWriter.ROTATION_0: {
-        xBegin = mirrorVertical ? grid.getXSize()-1 : 0;
-        yBegin = mirrorHorizontal ? 0 : grid.getYSize()-1;
-        xEnd = mirrorVertical ? 0 : grid.getXSize();
-        yEnd = mirrorHorizontal ? grid.getYSize() : 0;
-        xDirection = mirrorVertical ? -1 : 1;
-        yDirection = mirrorHorizontal ? 1 : -1;
+        xBegin = mirrorHorizontal ? grid.getXSize()-1 : 0;
+        yBegin = mirrorVertical ? 0 : grid.getYSize()-1;
+        xEnd = mirrorHorizontal ? 0 : grid.getXSize();
+        yEnd = mirrorVertical ? grid.getYSize() : 0;
+        xDirection = mirrorHorizontal ? -1 : 1;
+        yDirection = mirrorVertical ? 1 : -1;
         x = xBegin;
         y = yBegin;
       } break;
       case HeaderWriter.ROTATION_90: {
-        xBegin = mirrorVertical ? 0 : grid.getXSize()-1;
+        xBegin = mirrorVertical ? grid.getYSize()-1 : 0;
         yBegin = mirrorHorizontal ? grid.getXSize()-1 : 0;
-        xEnd = mirrorVertical ? grid.getXSize() : 0;
+        xEnd = mirrorVertical ? 0 : grid.getYSize();
         yEnd = mirrorHorizontal ? 0 : grid.getXSize();
-        xDirection = mirrorVertical ? 1 : -1;
+        xDirection = mirrorVertical ? -1 : 1;
         yDirection = mirrorHorizontal ? -1 : 1;
         x = xBegin;
         y = yBegin;
       } break;
       case HeaderWriter.ROTATION_180: {
-        xBegin = mirrorVertical ? 0 : grid.getXSize()-1;
-        yBegin = mirrorHorizontal ? 0 : grid.getXSize()-1;
-        xEnd = mirrorVertical ? grid.getXSize() : 0;
-        yEnd = mirrorHorizontal ? grid.getXSize() : 0;
-        xDirection = mirrorVertical ? 1 : -1;
-        yDirection = mirrorHorizontal ? 1 : -1;
+        xBegin = mirrorHorizontal ? 0 : grid.getXSize()-1;
+        yBegin = mirrorVertical ? grid.getYSize()-1 : 0;
+        xEnd = mirrorHorizontal ? grid.getXSize() : 0;
+        yEnd = mirrorVertical ? 0 : grid.getYSize();
+        xDirection = mirrorHorizontal ? 1 : -1;
+        yDirection = mirrorVertical ? -1 : 1;
         x = xBegin;
         y = yBegin;
       } break;
       case HeaderWriter.ROTATION_270: {
-        xBegin = mirrorVertical ? grid.getXSize()-1 : 0;
+        xBegin = mirrorVertical ? 0 : grid.getYSize()-1;
         yBegin = mirrorHorizontal ? 0 : grid.getXSize()-1;
-        xEnd = mirrorVertical ? 0 : grid.getXSize();
+        xEnd = mirrorVertical ? grid.getYSize() : 0;
         yEnd = mirrorHorizontal ? grid.getXSize() : 0;
-        xDirection = mirrorVertical ? -1 : 1;
+        xDirection = mirrorVertical ? 1 : -1;
         yDirection = mirrorHorizontal ? 1 : -1;
         x = xBegin;
         y = yBegin;

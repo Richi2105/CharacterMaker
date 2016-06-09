@@ -18,6 +18,7 @@ import java.awt.Point;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -38,6 +39,9 @@ public class ControlGrid extends DialogShowBaseClass implements ActionListener, 
   private final SpinnerDecimalModel spinnerModelColumns;
   private final SpinnerDecimalModel spinnerModelRows;
   private final JCheckBox checkBoxVariableColumns;
+  
+  private final JRadioButton radioButtonAllCharacters;
+  private final JRadioButton radioButtonNoCharacters;
   
   private final JButton buttonSetGridOK;
   private final JButton buttonSetGridCancel;
@@ -62,6 +66,11 @@ public class ControlGrid extends DialogShowBaseClass implements ActionListener, 
     this.buttonSetGridOK.addActionListener(this);
     this.buttonSetGridCancel = view.getDialogButtonGridCancel();
     this.buttonSetGridCancel.addActionListener(this);
+    
+    this.radioButtonAllCharacters = view.getDialogNewRadioButtonAllCharacter();
+    this.radioButtonNoCharacters = view.getDialogNewRadioButtonNoCharacter();
+    this.radioButtonAllCharacters.addActionListener(this);
+    this.radioButtonNoCharacters.addActionListener(this);
     
     this.spinnerModelColumns = new SpinnerDecimalModel(5, 32);
     this.spinnerModelRows = new SpinnerDecimalModel(5, 32);
@@ -104,9 +113,11 @@ public class ControlGrid extends DialogShowBaseClass implements ActionListener, 
   {
     this.labelColumns.setText("Columns");
     this.labelRows.setText("Rows");
-    this.buttonSetGridOK.setText("Set Grid");
+    this.buttonSetGridOK.setText("Create Character Set");
     this.buttonSetGridCancel.setText("Cancel");
     this.checkBoxVariableColumns.setText("Variable Number of Columns");
+    this.radioButtonAllCharacters.setText("Complete Character Set");
+    this.radioButtonNoCharacters.setText("Empty Character Set");
   }
   
   public void setDimensions(int xSize, int ySize)
@@ -145,6 +156,11 @@ public class ControlGrid extends DialogShowBaseClass implements ActionListener, 
   {
     return this.varColumnNumber;
   }
+  
+  public boolean isCompleteCharacterSet()
+  {
+    return this.radioButtonAllCharacters.isSelected();
+  }
 
   @Override
   public void actionPerformed(ActionEvent e)
@@ -169,14 +185,15 @@ public class ControlGrid extends DialogShowBaseClass implements ActionListener, 
     }
     else if (e.getSource() == this.checkBoxVariableColumns)
     {
-      if (this.checkBoxVariableColumns.isSelected())
-      {
-        this.spinnerColumns.setEnabled(false);
-      }
-      else
-      {
-        this.spinnerColumns.setEnabled(true);
-      }
+      this.spinnerColumns.setEnabled(!this.checkBoxVariableColumns.isSelected());
+    }
+    else if (e.getSource() == this.radioButtonAllCharacters)
+    {
+      this.radioButtonNoCharacters.setSelected(false);
+    }
+    else if (e.getSource() == this.radioButtonNoCharacters)
+    {
+      this.radioButtonAllCharacters.setSelected(false);
     }
 
   }
